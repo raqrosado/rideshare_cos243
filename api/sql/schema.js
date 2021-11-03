@@ -39,6 +39,35 @@ function tableBuilder(knex) {
         tbl.integer("fromLocationId").references("id").inTable("location");
         tbl.integer("toLocationId").references("id").inTable("location");
     })
+
+    query5 = knex.createTable("passenger", tbl => {
+        tbl.integer("userID").primary().references("id").inTable("user");
+        tbl.integer("rideID").primary().references("id").inTable("ride");
+    })
+
+    query6 = knex.createTable("drivers", tbl => {
+        tbl.integer("driverID").primary().references("id").inTable("driver");
+        tbl.integer("rideID").primary().references("id").inTable("ride");
+    })
+
+    query7 = knex.createTable("authorization", tbl => {
+        tbl.integer("driverID").primary().references("id").inTable("driver");
+        tbl.integer("vehicleID").primary().references("id").inTable("vehicle");
+    })
+
+    query8 = knex.createTable("state", tbl => {
+        tbl.string("abbreviation").primary();
+        tbl.string("name");
+    })
+
+    query8 = knex.createTable("location", tbl => {
+        tbl.increments("id").primary();
+        tbl.string("name");
+        tbl.string("address");
+        tbl.string("city");
+        tbl.string("state").references("abbreviation").inTable("state");
+        tbl.string("zipCode");
+    })
   }
 
 
