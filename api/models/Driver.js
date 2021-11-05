@@ -7,20 +7,20 @@ class Driver extends Model {
 
     static get relationMappings() {
         return {
-            driverIds: {
-                relation: Model.BelongsToOneRelation,
-                modelClass: path.join('__C:/Users/rockr/Desktop/Taylor/cos243/rideshare_cos243/api/models', '/User'),
+            driverId: {
+                relation: Model.HasManyRelation,
+                modelClass: Authorization,
                 join: {
-                    from: 'driver.userId',
-                    to: 'user.user_id'
+                    from: 'driver.driver_id',
+                    to: 'authorization.driverId'
                 }
             },
-            licenseStates: {
-                relation: Model.BelongsToOneRelation,
-                modelClass: path.join('__C:/Users/rockr/Desktop/Taylor/cos243/rideshare_cos243/api/models', '/State'),
+            driverId: {
+                relation: Model.HasManyRelation,
+                modelClass: Drivers,
                 join: {
-                    from: 'driver.licenseState',
-                    to: 'state.name'
+                    from: 'driver.driver_id',
+                    to: 'drivers.driverId'
                 }
             }
         };

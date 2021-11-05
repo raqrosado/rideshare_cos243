@@ -7,12 +7,20 @@ class Location extends Model {
     
     static get relationMappings() {
         return {
-            states: {
-                relation: Model.BelongsToOneRelation,
-                modelClass: path.join('__C:/Users/rockr/Desktop/Taylor/cos243/rideshare_cos243/api/models', '/Location'),
+            locationId: {
+                relation: Model.HasManyRelation,
+                modelClass: Ride,
                 join: {
-                    from: 'location.state',
-                    to: 'state.name'
+                    from: 'location.location_id',
+                    to: 'ride.fromLocationId'
+                }
+            },
+            locationId: {
+                relation: Model.HasManyRelation,
+                modelClass: Ride,
+                join: {
+                    from: 'location.location_id',
+                    to: 'ride.toLocationId'
                 }
             }
         };
