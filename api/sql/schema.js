@@ -1,10 +1,10 @@
 function tableBuilder(knex) {
     query1 = knex.createTable("vehicle", tbl => {
-        tbl.increments("id").primary();
+        tbl.increments("vehicle_id").primary();
         tbl.string("make");
         tbl.string("model");
         tbl.string("color");
-        tbl.integer("vehicleTypeId").references("id").inTable("vehicle_type");
+        tbl.integer("vehicleTypeId").references("vehicle_type_id").inTable("vehicle_type");
         tbl.integer("capacity");
         tbl.float("mpg");
         tbl.integer("licenseState").references("abbreviation").inTable("state");
@@ -12,14 +12,14 @@ function tableBuilder(knex) {
     })
 
     query2 = knex.createTable("driver", tbl => {
-        tbl.increments("id").primary();
-        tbl.integer("userId").references("id").inTable("user");
+        tbl.increments("driver_id").primary();
+        tbl.integer("userId").references("user_id").inTable("user");
         tbl.string("licenseNumber");
         tbl.integer("licenseState").references("abbreviation").inTable("state");
     })
 
     query3 = knex.createTable("user", tbl => {
-        tbl.increments("id").primary();
+        tbl.increments("user_id").primary();
         tbl.string("firstName");
         tbl.string("lastName");
         tbl.string("email");
@@ -29,30 +29,30 @@ function tableBuilder(knex) {
     })
 
     query4 = knex.createTable("ride", tbl => {
-        tbl.increments("id").primary();
+        tbl.increments("ride_id").primary();
         tbl.date("date");
         tbl.time("time");
         tbl.float("distance");
         tbl.float("fuelPrice");
         tbl.float("fee");
-        tbl.integer("vehicleId").references("id").inTable("vehicle");
-        tbl.integer("fromLocationId").references("id").inTable("location");
-        tbl.integer("toLocationId").references("id").inTable("location");
+        tbl.integer("vehicleId").references("vehicle_id").inTable("vehicle");
+        tbl.integer("fromLocationId").references("location_id").inTable("location");
+        tbl.integer("toLocationId").references("location_id").inTable("location");
     })
 
     query5 = knex.createTable("passenger", tbl => {
-        tbl.integer("userID").primary().references("id").inTable("user");
-        tbl.integer("rideID").primary().references("id").inTable("ride");
+        tbl.integer("userID").primary().references("user_id").inTable("user");
+        tbl.integer("rideID").primary().references("ride_id").inTable("ride");
     })
 
     query6 = knex.createTable("drivers", tbl => {
-        tbl.integer("driverID").primary().references("id").inTable("driver");
-        tbl.integer("rideID").primary().references("id").inTable("ride");
+        tbl.integer("driverID").primary().references("driver_id").inTable("driver");
+        tbl.integer("rideID").primary().references("ride_id").inTable("ride");
     })
 
     query7 = knex.createTable("authorization", tbl => {
-        tbl.integer("driverID").primary().references("id").inTable("driver");
-        tbl.integer("vehicleID").primary().references("id").inTable("vehicle");
+        tbl.integer("driverID").primary().references("driver_id").inTable("driver");
+        tbl.integer("vehicleID").primary().references("vehicle_id").inTable("vehicle");
     })
 
     query8 = knex.createTable("state", tbl => {
@@ -61,12 +61,17 @@ function tableBuilder(knex) {
     })
 
     query8 = knex.createTable("location", tbl => {
-        tbl.increments("id").primary();
+        tbl.increments("location_id").primary();
         tbl.string("name");
         tbl.string("address");
         tbl.string("city");
         tbl.string("state").references("abbreviation").inTable("state");
         tbl.string("zipCode");
+    })
+
+    query9 = knex.createTable("vehicle_type", tbl => {
+        tbl.increments("vehicle_type_id").primary();
+        tbl.string("type");
     })
   }
 
