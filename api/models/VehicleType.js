@@ -13,7 +13,7 @@ class Vehicle extends Model {
         relation: Model.BelongsToOneRelation,
         modelClass: VehicleType,
         join: {
-          from: "vehicle.vehicel_id",
+          from: "vehicle.vehicle_id",
           to: "vehicletype.type",
         },
       },
