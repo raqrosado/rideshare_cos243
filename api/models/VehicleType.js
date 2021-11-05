@@ -1,9 +1,22 @@
-const { Model } = require('objection');
-
-class Vehicle_Type extends Model {
-    static get tableName() {
-        return 'vehicle_type';
-    }
+class VehicleType extends Model {
+  static get tableName() {
+    return "country";
+  }
 }
-
-module.exports = { Vehicle_Type };
+class Vehicle extends Model {
+  static get tableName() {
+    return "vehicle";
+  }
+  static get relationMappings() {
+    return {
+      vehicle: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: VehicleType,
+        join: {
+          from: "vehicle.vehicle_id",
+          to: "vehicletype.type",
+        },
+      },
+    };
+  }
+}
