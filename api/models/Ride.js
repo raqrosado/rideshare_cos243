@@ -15,7 +15,7 @@ class Ride extends Model {
                     to: 'vehicle.vehicle_id'
                 }
             },
-            licenseStates: {
+            startingLocation: {
                 relation: Model.BelongsToOneRelation,
                 modelClass: path.join('__C:/Users/rockr/Desktop/Taylor/cos243/rideshare_cos243/api/models', '/Location'),
                 join: {
@@ -23,7 +23,7 @@ class Ride extends Model {
                     to: 'location.location_id'
                 }
             },
-            licenseStates: {
+            endingLocation: {
                 relation: Model.BelongsToOneRelation,
                 modelClass: path.join('__C:/Users/rockr/Desktop/Taylor/cos243/rideshare_cos243/api/models', '/Location'),
                 join: {
