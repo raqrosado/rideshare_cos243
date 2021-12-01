@@ -60,7 +60,83 @@
           "id": 42,
           "type": "Pickup Truck"
         }
-      }
+      },
+      "Vehicle": {
+        "description": "Vehicle description",
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer" },
+          "make" : { "type": "string" },
+          "model" : { "type": "string" },
+          "color" : { "type": "string" },
+          "vehicleTypeId": { "type": "integer" },
+          "capacity" : { "type": "integer" },
+          "mpg" : { "type": "float" },
+          "licenseState" : { "type": "integer" },
+          "licensePlate" : { "type": "string" }
+        },
+        "example": {
+          "id": 12,
+          "make" : "Buick",
+          "model" : "Park Avenue",
+          "color" : "Navy",
+          "vehicleTypeId": 48,
+          "capacity" : 1000,
+          "mpg" : 29,
+          "licenseState" : 49,
+          "licensePlate" : "BUCKSN6"
+        }
+      },
+      "Ride": {
+        "description": "Every Ride from **RideShare**",
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer" },
+          "date": { "type": "date" },
+          "time": { "type": "time" },
+          "distance": { "type": "float" },
+          "fuelPrice": { "type": "float" },
+          "fee": { "type": "float" },
+          "vehicleId": { "type": "integer" },
+          "fromLocationId": { "type": "integer" },
+          "toLocationId": { "type": "integer" }
+        },
+        "example": {
+          "id": 22,
+          "date": "2021-12-01",
+          "time": "T22:18:26.625Z",
+          "distance": 250,
+          "fuelPrice": 3.16,
+          "fee": 8.99,
+          "vehicleId": 12,
+          "fromLocationId": 18,
+          "toLocationId": 19
+        }
+      },
+      "Location": {
+        "description": "The starting and ending Locations for Rides",
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer" },
+          "name": { "type": "string" },
+          "address": { "type": "string" },
+          "city": { "type": "string" },
+          "state": { "type": "string" },
+          "zipCode": { "type": "string" }
+        },
+        "example": {
+          "id": 18,
+          "name": "The Bean",
+          "address": "25 N Michigan Ave",
+          "city": "Chicago",
+          "state": "IL",
+          "zipCode": "60602"
+        }
+      },
+
+
+
+
     }
   },
   "paths": {
