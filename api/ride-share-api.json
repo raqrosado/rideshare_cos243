@@ -153,10 +153,34 @@
           "zipCode": "60602"
         }
       },
-
-
-
-
+      "Driver": {
+        "description": "Every Driver from **RideShare**",
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer" },
+          "userId": { "type": "integer" },
+          "licenseNumber": { "type": "string" },
+          "licenseState": { "type": "integer" }
+        },
+        "example": {
+          "id": 6,
+          "userId": 42,
+          "licenseNumber": "I1234568",
+          "licenseState": 18
+        }
+      },
+      "Passenger": {
+        "description": "Every Passenger using **RideShare**",
+        "type": "object",
+        "properties": {
+          "userId": { "type": "integer" },
+          "rideId": { "type": "integer" }
+        },
+        "example": {
+          "userId": 43,
+          "rideId": 54
+        }
+      }
     }
   },
   "paths": {
