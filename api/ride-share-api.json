@@ -864,74 +864,21 @@
         }
       }
     },
-    "/passenger": {
+    "/users/{userId}/rides{rideId}": {
       "post": {
-        "summary": "Create a new passengers.",
-        "description": "_Each_ passengers in **Ride Share** has a unique id",
-        "tags": ["passengers"],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "userId": { "type": "integer" },
-                  "rideId": { "type": "integer" }
-                },
-                "example": {
-                  "userId": 43,
-                  "rideId": 54
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "New passenger created",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Passengers"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Can't create passenger"
-          }
-        }
-      },
-      "get": {
-        "summary": "Retrieve all passengers",
-        "tags": ["passengers"],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Passengers"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Can't get passenger"
-          }
-        }
-      }
-    },
-    "/passengers/{id}": {
-      "patch": {
-        "summary": "Update an existing passenger",
+        "summary": "Add a passenger to a ride",
         "tags": ["passenger"],
         "parameters": [
           {
             "name": "userId",
+            "in": "path",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          },
+          {
+            "name": "rideId",
             "in": "path",
             "schema": {
               "type": "integer"
@@ -947,9 +894,11 @@
               "schema": {
                 "type": "object",
                 "properties": {
+                  "userId": { "type": "integer" },
                   "rideId": { "type": "integer" }
                 },
                 "example": {
+                  "userId": 43,
                   "rideId": 54
                 }
               }
