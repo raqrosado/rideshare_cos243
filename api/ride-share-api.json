@@ -724,6 +724,145 @@
           }
         }
       }
+    },
+    "/drivers": {
+      "post": {
+        "summary": "Create a new driver.",
+        "description": "_Each_ driver in **Ride Share** has a unique id, making it easier for riders to identify drivers",
+        "tags": ["drivers"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": { "type": "integer" },
+                  "userId": { "type": "integer" },
+                  "licenseNumber": { "type": "string" },
+                  "licenseState": { "type": "integer" }
+                },
+                "example": {
+                  "id": 6,
+                  "userId": 42,
+                  "licenseNumber": "I1234568",
+                  "licenseState": 18
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "New driver created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Drivers"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Can't create driver"
+          }
+        }
+      },
+      "get": {
+        "summary": "Retrieve all drivers",
+        "tags": ["drivers"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Drivers"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Can't get driver"
+          }
+        }
+      }
+    },
+    "/drivers/{id}": {
+      "patch": {
+        "summary": "Update an existing driver",
+        "tags": ["driver"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "description": "Updated driver",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "userId": { "type": "integer" },
+                  "licenseNumber": { "type": "string" },
+                  "licenseState": { "type": "integer" }
+                },
+                "example": {
+                  "userId": 42,
+                  "licenseNumber": "I1234568",
+                  "licenseState": 18
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Drivers"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No such driver ID"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete an existing drivers",
+        "tags": ["drivers"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Driver deleted"
+          },
+          "400": {
+            "description": "Can't delete driver"
+          }
+        }
+      }
     }
   }
 }
