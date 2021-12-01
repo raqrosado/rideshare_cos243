@@ -86,25 +86,25 @@
         "type": "object",
         "properties": {
           "id": { "type": "integer" },
-          "make" : { "type": "string" },
-          "model" : { "type": "string" },
-          "color" : { "type": "string" },
+          "make": { "type": "string" },
+          "model": { "type": "string" },
+          "color": { "type": "string" },
           "vehicleTypeId": { "type": "integer" },
-          "capacity" : { "type": "integer" },
-          "mpg" : { "type": "float" },
-          "licenseState" : { "type": "integer" },
-          "licensePlate" : { "type": "string" }
+          "capacity": { "type": "integer" },
+          "mpg": { "type": "float" },
+          "licenseState": { "type": "integer" },
+          "licensePlate": { "type": "string" }
         },
         "example": {
           "id": 12,
-          "make" : "Buick",
-          "model" : "Park Avenue",
-          "color" : "Navy",
+          "make": "Buick",
+          "model": "Park Avenue",
+          "color": "Navy",
           "vehicleTypeId": 48,
-          "capacity" : 1000,
-          "mpg" : 29,
-          "licenseState" : 49,
-          "licensePlate" : "BUCKSN6"
+          "capacity": 1000,
+          "mpg": 29,
+          "licenseState": 49,
+          "licensePlate": "BUCKSN6"
         }
       },
       "Ride": {
@@ -188,9 +188,7 @@
       "summary": "Operations on users",
       "get": {
         "summary": "Get all users",
-        "tags": [
-          "user"
-        ],
+        "tags": ["user"],
         "responses": {
           "200": {
             "description": "All users fetched successfully",
@@ -209,9 +207,7 @@
       },
       "post": {
         "summary": "Create a new user",
-        "tags": [
-          "user"
-        ],
+        "tags": ["user"],
         "requestBody": {
           "required": true,
           "content": {
@@ -261,9 +257,7 @@
       "summary": "Operations on a single user",
       "get": {
         "summary": "Get user by ID",
-        "tags": [
-          "user"
-        ],
+        "tags": ["user"],
         "parameters": [
           {
             "name": "id",
@@ -296,9 +290,7 @@
       "post": {
         "summary": "Create a new vehicle type.",
         "description": "_Each_ vehicle in **Ride Share** has a `type`, making it easier for riders to identify the vehicle.",
-        "tags": [
-          "vehicle-type"
-        ],
+        "tags": ["vehicle-type"],
         "requestBody": {
           "content": {
             "application/json": {
@@ -331,9 +323,7 @@
       },
       "get": {
         "summary": "Retrieve all vehicle types",
-        "tags": [
-          "vehicle-type"
-        ],
+        "tags": ["vehicle-type"],
         "responses": {
           "200": {
             "description": "OK",
@@ -354,9 +344,7 @@
     "/vehicle-types/{id}": {
       "patch": {
         "summary": "Update an existing vehicle type",
-        "tags": [
-          "vehicle-type"
-        ],
+        "tags": ["vehicle-type"],
         "parameters": [
           {
             "name": "id",
@@ -404,9 +392,7 @@
       },
       "delete": {
         "summary": "Delete an existing vehicle type",
-        "tags": [
-          "vehicle-type"
-        ],
+        "tags": ["vehicle-type"],
         "parameters": [
           {
             "name": "id",
@@ -432,37 +418,33 @@
     "post": {
       "summary": "Create a new ride.",
       "description": "_Each_ ride in **Ride Share** has a unique id, making it easier for riders to identify the ride.",
-      "tags": [
-        "rides"
-      ],
+      "tags": ["rides"],
       "requestBody": {
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "id": {
-                  "type": "integer"
-                },
-                "drivers": {
-                  "type": "array"
-                },
-                "passengers": {
-                  "type": "array"
-                },
-                "toLocation": {
-                  "type": "string"
-                },
-                "fromLocation": {
-                  "type": "string"
-                }
+                "id": { "type": "integer" },
+                "date": { "type": "date" },
+                "time": { "type": "time" },
+                "distance": { "type": "float" },
+                "fuelPrice": { "type": "float" },
+                "fee": { "type": "float" },
+                "vehicleId": { "type": "integer" },
+                "fromLocationId": { "type": "integer" },
+                "toLocationId": { "type": "integer" }
               },
               "example": {
-                "id": "0001",
-                "drivers": "['Fred Ziffle','Franz Kafka']",
-                "passengers": "['Mao Zedong','Mikhail Gorbachev']",
-                "fromLocation": "001 Market Street, Juniper, WA 40357",
-                "toLocation": "007 Mabel Street, Pablo, WY 40383"
+                "id": 22,
+                "date": "2021-12-01",
+                "time": "T22:18:26.625Z",
+                "distance": 250,
+                "fuelPrice": 3.16,
+                "fee": 8.99,
+                "vehicleId": 12,
+                "fromLocationId": 18,
+                "toLocationId": 19
               }
             }
           }
@@ -483,9 +465,7 @@
     },
     "get": {
       "summary": "Retrieve all rides",
-      "tags": [
-        "rides"
-      ],
+      "tags": ["rides"],
       "responses": {
         "200": {
           "description": "OK",
@@ -506,9 +486,7 @@
   "/rides/{id}": {
     "patch": {
       "summary": "Update an existing ride",
-      "tags": [
-        "rides"
-      ],
+      "tags": ["rides"],
       "parameters": [
         {
           "name": "id",
@@ -527,66 +505,223 @@
             "schema": {
               "type": "object",
               "properties": {
-                "drivers": {
-                  "type": "array"
-                },
-                "passengers": {
-                  "type": "array"
-                },
-                "toLocation": {
-                  "type": "string"
-                },
-                "fromLocation": {
-                  "type": "string"
-                }
+                "date": { "type": "date" },
+                "time": { "type": "time" },
+                "distance": { "type": "float" },
+                "fuelPrice": { "type": "float" },
+                "fee": { "type": "float" },
+                "vehicleId": { "type": "integer" },
+                "fromLocationId": { "type": "integer" },
+                "toLocationId": { "type": "integer" }
               },
               "example": {
-                "drivers": "['Fred Ziffle','Franz Kafka']",
-                "passengers": "['Mao Zedong','Mikhail Gorbachev']",
-                "fromLocation": "001 Market Street, Juniper, WA 40357",
-                "toLocation": "007 Mabel Street, Pablo, WY 40383"
+                "date": "2021-12-01",
+                "time": "T22:18:26.625Z",
+                "distance": 250,
+                "fuelPrice": 3.16,
+                "fee": 8.99,
+                "vehicleId": 12,
+                "fromLocationId": 18,
+                "toLocationId": 19
               }
             }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Rides"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No such ride ID"
           }
         }
       },
-      "responses": {
-        "200": {
-          "description": "OK",
+      "delete": {
+        "summary": "Delete an existing ride",
+        "tags": ["ride"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ride deleted"
+          },
+          "400": {
+            "description": "Can't delete ride"
+          }
+        }
+      }
+    },
+    "/vehicles": {
+      "post": {
+        "summary": "Create a new vehicle.",
+        "description": "_Each_ vehicle in **Ride Share** has a unique id, making it easier for riders and drivers to identify the vehicle.",
+        "tags": ["vehicles"],
+        "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Rides"
+                "type": "object",
+                "properties": {
+                  "id": { "type": "integer" },
+                  "make": { "type": "string" },
+                  "model": { "type": "string" },
+                  "color": { "type": "string" },
+                  "vehicleTypeId": { "type": "integer" },
+                  "capacity": { "type": "integer" },
+                  "mpg": { "type": "float" },
+                  "licenseState": { "type": "integer" },
+                  "licensePlate": { "type": "string" }
+                },
+                "example": {
+                  "id": 12,
+                  "make": "Buick",
+                  "model": "Park Avenue",
+                  "color": "Navy",
+                  "vehicleTypeId": 48,
+                  "capacity": 1000,
+                  "mpg": 29,
+                  "licenseState": 49,
+                  "licensePlate": "BUCKSN6"
+                }
               }
             }
           }
         },
-        "400": {
-          "description": "No such ride ID"
+        "responses": {
+          "200": {
+            "description": "New vehicle created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Vehicles"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Can't create vehicle"
+          }
+        }
+      },
+      "get": {
+        "summary": "Retrieve all vehicles",
+        "tags": ["vehicles"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Vehicles"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Can't get vehicle"
+          }
         }
       }
     },
-    "delete": {
-      "summary": "Delete an existing ride",
-      "tags": [
-        "ride"
-      ],
-      "parameters": [
-        {
-          "name": "id",
-          "in": "path",
-          "schema": {
-            "type": "integer"
-          },
-          "required": true
-        }
-      ],
-      "responses": {
-        "200": {
-          "description": "Ride deleted"
+    "/vehicles/{id}": {
+      "patch": {
+        "summary": "Update an existing vehicle",
+        "tags": ["vehicles"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "description": "Updated vehicle",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "make": { "type": "string" },
+                  "model": { "type": "string" },
+                  "color": { "type": "string" },
+                  "vehicleTypeId": { "type": "integer" },
+                  "capacity": { "type": "integer" },
+                  "mpg": { "type": "float" },
+                  "licenseState": { "type": "integer" },
+                  "licensePlate": { "type": "string" }
+                },
+                "example": {
+                  "make": "Buick",
+                  "model": "Park Avenue",
+                  "color": "Navy",
+                  "vehicleTypeId": 48,
+                  "capacity": 1000,
+                  "mpg": 29,
+                  "licenseState": 49,
+                  "licensePlate": "BUCKSN6"
+                }
+              }
+            }
+          }
         },
-        "400": {
-          "description": "Can't delete ride"
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Vehicles"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No such vehicle ID"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete an existing vehicle",
+        "tags": ["vehicles"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Vehicle deleted"
+          },
+          "400": {
+            "description": "Can't delete vehicle"
+          }
         }
       }
     }
