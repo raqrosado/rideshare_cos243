@@ -21,7 +21,9 @@
         "description": "Generic error message",
         "type": "object",
         "properties": {
-          "message": { "type": "string" }
+          "message": {
+            "type": "string"
+          }
         },
         "example": {
           "message": "Something strange happened."
@@ -31,13 +33,27 @@
         "description": "Each user of **Ride Share**",
         "type": "object",
         "properties": {
-          "id": { "type": "integer" },
-          "firstName": { "type": "string" },
-          "lastName": { "type": "string" },
-          "email": { "type": "string" },
-          "password": { "type": "string" },
-          "phone": { "type": "string" },
-          "isAdmin": { "type": "boolean" }
+          "id": {
+            "type": "integer"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "isAdmin": {
+            "type": "boolean"
+          }
         },
         "example": {
           "id": 42,
@@ -53,8 +69,12 @@
         "description": "Type of a vehicle",
         "type": "object",
         "properties": {
-          "id": { "type": "integer" },
-          "vehicleType": { "type": "string" }
+          "id": {
+            "type": "integer"
+          },
+          "vehicleType": {
+            "type": "string"
+          }
         },
         "example": {
           "id": 42,
@@ -144,7 +164,9 @@
       "summary": "Operations on users",
       "get": {
         "summary": "Get all users",
-        "tags": ["user"],
+        "tags": [
+          "user"
+        ],
         "responses": {
           "200": {
             "description": "All users fetched successfully",
@@ -163,7 +185,9 @@
       },
       "post": {
         "summary": "Create a new user",
-        "tags": ["user"],
+        "tags": [
+          "user"
+        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -213,7 +237,9 @@
       "summary": "Operations on a single user",
       "get": {
         "summary": "Get user by ID",
-        "tags": ["user"],
+        "tags": [
+          "user"
+        ],
         "parameters": [
           {
             "name": "id",
@@ -246,14 +272,18 @@
       "post": {
         "summary": "Create a new vehicle type.",
         "description": "_Each_ vehicle in **Ride Share** has a `type`, making it easier for riders to identify the vehicle.",
-        "tags": ["vehicle-type"],
+        "tags": [
+          "vehicle-type"
+        ],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
-                  "vehicleType": { "type": "string" }
+                  "vehicleType": {
+                    "type": "string"
+                  }
                 },
                 "example": {
                   "vehicleType": "Pickup Truck"
@@ -277,7 +307,9 @@
       },
       "get": {
         "summary": "Retrieve all vehicle types",
-        "tags": ["vehicle-type"],
+        "tags": [
+          "vehicle-type"
+        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -298,12 +330,16 @@
     "/vehicle-types/{id}": {
       "patch": {
         "summary": "Update an existing vehicle type",
-        "tags": ["vehicle-type"],
+        "tags": [
+          "vehicle-type"
+        ],
         "parameters": [
           {
             "name": "id",
             "in": "path",
-            "schema": { "type": "integer" },
+            "schema": {
+              "type": "integer"
+            },
             "required": true
           }
         ],
@@ -344,12 +380,16 @@
       },
       "delete": {
         "summary": "Delete an existing vehicle type",
-        "tags": ["vehicle-type"],
+        "tags": [
+          "vehicle-type"
+        ],
         "parameters": [
           {
             "name": "id",
             "in": "path",
-            "schema": { "type": "integer" },
+            "schema": {
+              "type": "integer"
+            },
             "required": true
           }
         ],
@@ -360,6 +400,169 @@
           "400": {
             "description": "Can't delete vehicle"
           }
+        }
+      }
+    }
+  },
+  "/rides": {
+    "post": {
+      "summary": "Create a new ride.",
+      "description": "_Each_ ride in **Ride Share** has a unique id, making it easier for riders to identify the ride.",
+      "tags": [
+        "rides"
+      ],
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "drivers": {
+                  "type": "array"
+                },
+                "passengers": {
+                  "type": "array"
+                },
+                "toLocation": {
+                  "type": "string"
+                },
+                "fromLocation": {
+                  "type": "string"
+                }
+              },
+              "example": {
+                "id": "0001",
+                "drivers": "['Fred Ziffle','Franz Kafka']",
+                "passengers": "['Mao Zedong','Mikhail Gorbachev']",
+                "fromLocation": "001 Market Street, Juniper, WA 40357",
+                "toLocation": "007 Mabel Street, Pablo, WY 40383"
+              }
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "New ride created",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Rides"
+              }
+            }
+          }
+        }
+      }
+    },
+    "get": {
+      "summary": "Retrieve all rides",
+      "tags": [
+        "rides"
+      ],
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Rides"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "/rides/{id}": {
+    "patch": {
+      "summary": "Update an existing ride",
+      "tags": [
+        "rides"
+      ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "schema": {
+            "type": "integer"
+          },
+          "required": true
+        }
+      ],
+      "requestBody": {
+        "description": "Updated ride",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "drivers": {
+                  "type": "array"
+                },
+                "passengers": {
+                  "type": "array"
+                },
+                "toLocation": {
+                  "type": "string"
+                },
+                "fromLocation": {
+                  "type": "string"
+                }
+              },
+              "example": {
+                "drivers": "['Fred Ziffle','Franz Kafka']",
+                "passengers": "['Mao Zedong','Mikhail Gorbachev']",
+                "fromLocation": "001 Market Street, Juniper, WA 40357",
+                "toLocation": "007 Mabel Street, Pablo, WY 40383"
+              }
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Rides"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "No such ride ID"
+        }
+      }
+    },
+    "delete": {
+      "summary": "Delete an existing ride",
+      "tags": [
+        "ride"
+      ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "schema": {
+            "type": "integer"
+          },
+          "required": true
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Ride deleted"
+        },
+        "400": {
+          "description": "Can't delete ride"
         }
       }
     }
