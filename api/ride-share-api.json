@@ -1141,6 +1141,84 @@
           }
         }
       }
+    },
+    "/location/{id}?from=true,to=true": {
+      "patch": {
+        "summary": "Update an existing location",
+        "tags": ["location"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "description": "Updated location",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "address": { "type": "string" },
+                  "city": { "type": "string" },
+                  "state": { "type": "string" },
+                  "zipCode": { "type": "string" }
+                },
+                "example": {
+                  "name": "The Bean",
+                  "address": "25 N Michigan Ave",
+                  "city": "Chicago",
+                  "state": "IL",
+                  "zipCode": "60602"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Location"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No such location ID"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete an existing location",
+        "tags": ["location"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Location deleted"
+          },
+          "400": {
+            "description": "Can't delete location"
+          }
+        }
+      }
     }
   }
 }
