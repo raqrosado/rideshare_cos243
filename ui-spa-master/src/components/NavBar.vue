@@ -35,6 +35,12 @@
         <v-list-item @click="signOut">
           <v-list-item-title>Sign Out</v-list-item-title>
         </v-list-item>
+
+        <v-divider></v-divider>
+
+        <v-list-item @click="ResetPassword" v-bind:to="{ name: 'reset-password' }">
+          <v-list-item-title>Reset Password</v-list-item-title>
+        </v-list-item>
       </v-list>
     </v-menu>
   </v-app-bar>

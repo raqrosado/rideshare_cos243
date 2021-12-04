@@ -3,10 +3,10 @@
 const knex = require("knex")({
   client: "pg",
   connection: {
-    host: "localhost", // PostgreSQL server
+    host: "pg.cse.taylor.edu", // PostgreSQL server
     user: "raquel_rosado", // Your user name
     password: "lajusobe", // Your password
-    database: "cos-243-ui-spa", // Your database name
+    database: "raquel_rosado", // Your database name
   },
 });
 
@@ -88,6 +88,93 @@ async function init() {
         }
       },
     },
+
+    {
+      method: "POST",
+      path: "/reset-password",
+      config: {
+        description: "Reset password",
+        validate: {
+          payload: Joi.object({
+            email: Joi.string().email().required(),
+            password: Joi.string().required(),
+          }),
+        },
+      },
+      handler: async (request, h) => {
+        const existingAccount = await Account.query()
+          .where("email", request.payload.email)
+          .first();
+        const oldPassword = await Account.query()
+          .where("password", request.payload.password)
+          .first();
+
+
+
+        if (!existingAccount) {
+          return {
+            ok: false,
+            msge: `Account with email '${request.payload.email}' does not exist`,
+          };
+        }
+        /*
+        if (existingAccount) {
+          return {
+            ok: true,
+            msge: `You're in`,
+          };
+        }
+        */
+
+        if (
+          existingAccount &&
+          (await existingAccount.verifyPassword(request.payload.password))
+        ) {
+          return {
+            ok: true,
+            msge: `Successful '${request.payload.email}'`,
+            details: {
+              id: existingAccount.id,
+              firstName: existingAccount.first_name,
+              lastName: existingAccount.last_name,
+              email: existingAccount.email,
+            },
+          };
+        } else {
+          return {
+            ok: false,
+            msge: "Invalid email or password",
+          };
+        }
+
+
+
+
+        const newAccount = await Account.query().insert({
+          first_name: request.payload.firstName,
+          last_name: request.payload.lastName,
+          email: request.payload.email,
+          password: request.payload.password,
+        });
+
+        if (newAccount) {
+          return {
+            ok: true,
+            msge: `Created account '${request.payload.email}'`,
+          };
+        } else {
+          return {
+            ok: false,
+            msge: `Couldn't create account with email '${request.payload.email}'`,
+          };
+        }
+      },
+    },
+
+
+
+
+
 
     {
       method: "GET",
