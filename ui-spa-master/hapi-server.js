@@ -20,6 +20,7 @@ const Account = require("./models/Account");
 // Hapi
 const Joi = require("@hapi/joi"); // Input validation
 const Hapi = require("@hapi/hapi"); // Server
+const { beforeInsert } = require("./models/Account");
 
 const server = Hapi.server({
   host: "localhost",
@@ -90,14 +91,15 @@ async function init() {
     },
 
     {
-      method: "POST",
-      path: "/reset-password",
+      method: "PUT",
+      path: "/accounts",
       config: {
         description: "Reset password",
         validate: {
           payload: Joi.object({
             email: Joi.string().email().required(),
             password: Joi.string().required(),
+            oldpassword: Joi.string().required(),
           }),
         },
       },
@@ -117,18 +119,10 @@ async function init() {
             msge: `Account with email '${request.payload.email}' does not exist`,
           };
         }
-        /*
-        if (existingAccount) {
-          return {
-            ok: true,
-            msge: `You're in`,
-          };
-        }
-        */
-
+        
         if (
           existingAccount &&
-          (await existingAccount.verifyPassword(request.payload.password))
+          (await existingAccount.verifyOldPassword(request.payload.oldpassword))
         ) {
           return {
             ok: true,
@@ -138,34 +132,13 @@ async function init() {
               firstName: existingAccount.first_name,
               lastName: existingAccount.last_name,
               email: existingAccount.email,
+              password: request.payload.password,
             },
           };
         } else {
           return {
             ok: false,
             msge: "Invalid email or password",
-          };
-        }
-
-
-
-
-        const newAccount = await Account.query().insert({
-          first_name: request.payload.firstName,
-          last_name: request.payload.lastName,
-          email: request.payload.email,
-          password: request.payload.password,
-        });
-
-        if (newAccount) {
-          return {
-            ok: true,
-            msge: `Created account '${request.payload.email}'`,
-          };
-        } else {
-          return {
-            ok: false,
-            msge: `Couldn't create account with email '${request.payload.email}'`,
           };
         }
       },

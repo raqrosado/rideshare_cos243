@@ -19,6 +19,10 @@ class Account extends Model {
   async verifyPassword(plainTextPassword) {
     return compare(plainTextPassword, this.password);
   }
+
+  async verifyOldPassword(plainTextPassword) {
+    return compare(plainTextPassword, this.password);
+  }
 }
 
 module.exports = Account;

@@ -34,7 +34,7 @@
         </v-text-field>
          <v-text-field
           v-model="newMember.confirmpassword"
-          v-bind:rules="rules.confirmpassword"
+          v-bind:rules="[rules.confirmpassword, passwordConfirmationRule]"
           error-count="10"
           type="password"
           label="Confirm new password"
@@ -72,6 +72,23 @@
 
 <script>
 import Instructions from "../components/Instructions.vue";
+
+/*
+data: function () {
+  return {
+
+  }
+}
+new Vue({
+  validators: {
+    checkSamePasswords: function(val) {return true;}
+  }
+});
+
+checkSamePasswords: function (val) {
+  return val == this.vm.password;  
+}
+*/
 
 export default {
   name: "SignUpPage",
@@ -120,16 +137,23 @@ export default {
           (val) => /[a-z]/.test(val) || "Need lower case letter",
           (val) => /\d/.test(val) || "Need digit",
           (val) => val.length >= 8 || "Minimum 8 characters",
-          (val) => confirmpassword || "Equal to confirm password",    /*problem*/
         ],
         confirmpassword: [
           (val) => /[A-Z]/.test(val) || "Need upper case letter",
           (val) => /[a-z]/.test(val) || "Need lower case letter",
           (val) => /\d/.test(val) || "Need digit",
           (val) => val.length >= 8 || "Minimum 8 characters",
+          /* (val) => val == newMember[newpassword] || "Needs to be the same as your new password",
+
+          (val) => rules.newpassword || "Equal to new password", */
         ],
 
       },
+      computed: {
+        passwordConfirmationRule() {
+          return() => (this.password === this.rePassword) || "Password must match"
+        }
+      }
     };
   },
   methods: {
@@ -140,9 +164,10 @@ export default {
 
       // Post the content of the form to the Hapi server.
       this.$axios
-        .post("/accounts", {
+        .put("/accounts", {
           email: this.newMember.email,
           password: this.newMember.newpassword,
+          oldpassword: this.newMember.oldpassword,
         })
         .then((result) => {
           // Based on whether things worked or not, show the
