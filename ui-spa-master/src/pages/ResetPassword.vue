@@ -108,7 +108,7 @@ export default {
       },
 
       // Was an account created successfully?
-      accountCreated: false,
+      passwordReset: false,
 
       // Data to be displayed by the dialog.
       dialogHeader: "<no dialogHeader>",
@@ -160,11 +160,11 @@ export default {
     // Invoked when the user clicks the 'Sign Up' button.
     handleSubmit: function () {
       // Haven't been successful yet.
-      this.accountCreated = false;
+      this.passwordReset = false;
 
       // Post the content of the form to the Hapi server.
       this.$axios
-        .put("/accounts", {
+        .put("/reset-password", {
           email: this.newMember.email,
           password: this.newMember.newpassword,
           oldpassword: this.newMember.oldpassword,
@@ -174,7 +174,7 @@ export default {
           // appropriate dialog.
           if (result.data.ok) {
             this.showDialog("Success", result.data.msge);
-            this.accountCreated = true;
+            this.passwordReset = true;
           } else {
             this.showDialog("Sorry", result.data.msge);
           }
@@ -193,7 +193,7 @@ export default {
     // and navigate to the home page.
     hideDialog: function () {
       this.dialogVisible = false;
-      if (this.accountCreated) {
+      if (this.passwordReset) {
         // Only navigate away from the sign-up page if we were successful.
         this.$router.push({ name: "home-page" });
       }

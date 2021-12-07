@@ -92,7 +92,7 @@ async function init() {
 
     {
       method: "PUT",
-      path: "/accounts",
+      path: "/reset-password",
       config: {
         description: "Reset password",
         validate: {
@@ -124,14 +124,19 @@ async function init() {
           existingAccount &&
           (await existingAccount.verifyOldPassword(request.payload.oldpassword))
         ) {
+          const updatedAccount = await Account.query()
+          .update()
+          .where("email", request.payload.email)({
+            password: request.payload.password
+          });
           return {
             ok: true,
             msge: `Successful '${request.payload.email}'`,
             details: {
-              id: existingAccount.id,
-              firstName: existingAccount.first_name,
-              lastName: existingAccount.last_name,
-              email: existingAccount.email,
+              id: updatedAccount.id,
+              firstName: updatedAccount.first_name,
+              lastName: updatedAccount.last_name,
+              email: updatedAccount.email,
               password: request.payload.password,
             },
           };
