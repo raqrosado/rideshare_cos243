@@ -17,6 +17,7 @@ objection.Model.knex(knex);
 // Models
 const Account = require("./models/Account");
 
+
 // Hapi
 const Joi = require("@hapi/joi"); // Input validation
 const Hapi = require("@hapi/hapi"); // Server
@@ -148,11 +149,6 @@ async function init() {
         }
       },
     },
-
-
-
-
-
 
     {
       method: "GET",

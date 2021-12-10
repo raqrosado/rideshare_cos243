@@ -148,12 +148,7 @@ async function init() {
         }
       },
     },
-
-
-
-
-
-
+    
     {
       method: "GET",
       path: "/accounts",

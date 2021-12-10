@@ -29,7 +29,9 @@
         <v-list-item v-bind:to="{ name: 'accounts' }">
           <v-list-item-title>Accounts</v-list-item-title>
         </v-list-item>
-
+        <v-list-item v-bind:to="{ name: 'locations' }">
+          <v-list-item-title>Locations</v-list-item-title>
+        </v-list-item>
         <v-divider></v-divider>
 
         <v-list-item @click="signOut">

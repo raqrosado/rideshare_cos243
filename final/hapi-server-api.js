@@ -1,14 +1,14 @@
 // Knex
 
 const knex = require("knex")({
-    client: "pg",
-    connection: {
-      host: "pg.cse.taylor.edu", 
-      user: "raquel_rosado", 
-      password: "lajusobe", 
-      database: "raquel_rosado", 
-    },
-  });
+  client: "pg",
+  connection: {
+    host: "pg.cse.taylor.edu",
+    user: "raquel_rosado",
+    password: "lajusobe",
+    database: "raquel_rosado",
+  },
+});
 
 // Objection
 const objection = require("objection");
@@ -19,7 +19,6 @@ const Vehicle = require("./models/Vehicle");
 const Location = require("./models/Location");
 const Account = require("./models/Account");
 
-
 const Driver = require("./models/Driver");
 const User = require("./models/User");
 const Ride = require("./models/Ride");
@@ -29,10 +28,9 @@ const VehicleType = require("./models/VehicleType");
 // const Drivers = require("./models/Drivers");
 // const Passenger = require("./models/Passenger");
 
-
 // Hapi
-const Joi = require("@hapi/joi"); 
-const Hapi = require("@hapi/hapi"); 
+const Joi = require("@hapi/joi");
+const Hapi = require("@hapi/hapi");
 const { beforeInsert } = require("./models/Account");
 
 const server = Hapi.server({
@@ -42,9 +40,6 @@ const server = Hapi.server({
     cors: true,
   },
 });
-
-
-
 
 async function init() {
   // Show routes at startup.
@@ -188,23 +183,24 @@ async function init() {
           .where("password", request.payload.password)
           .first();
 
-
-
         if (!existingAccount) {
           return {
             ok: false,
             msge: `Account with email '${request.payload.email}' does not exist`,
           };
         }
-        
+
         if (
           existingAccount &&
           (await existingAccount.verifyOldPassword(request.payload.oldpassword))
         ) {
           const updatedAccount = await Account.query()
-          .update()
-          .where("email", request.payload.email)({
-            password: request.payload.password
+            .update()
+            .where(
+              "email",
+              request.payload.email
+            )({
+            password: request.payload.password,
           });
           return {
             ok: true,
@@ -297,6 +293,90 @@ async function init() {
             msge: "Invalid email or password",
           };
         }
+      },
+    },
+    {
+      method: "POST",
+      path: "/locations",
+      config: {
+        description: "Create a new location",
+        validate: {
+          payload: Joi.object({
+            name: Joi.string().required(),
+            address: Joi.string().required(),
+            city: Joi.string().required(),
+            state: Joi.string().required(),
+            zipCode: Joi.string().required(),
+          }),
+        },
+      },
+      handler: async (request, h) => {
+        const existingLocation = await Location.query()
+          .where("name", request.payload.name)
+          .first();
+        if (existingLocation) {
+          return {
+            ok: false,
+            msge: `Location with name '${request.payload.name}' already exists`,
+          };
+        }
+        name;
+        address;
+        city;
+        state;
+        zipCode;
+        const newLocation = await Location.query().insert({
+          name: request.payload.name,
+          address: request.payload.address,
+          city: request.payload.city,
+          state: request.payload.state,
+          zipCode: request.payload.zipCode,
+        });
+        if (newLocation) {
+          return {
+            ok: true,
+            msge: `Created location '${request.payload.name}'`,
+          };
+        } else {
+          return {
+            ok: false,
+            msge: `Couldn't create location with name '${request.payload.name}'`,
+          };
+        }
+      },
+    },
+    {
+      method: "GET",
+      path: "/locations",
+      config: {
+        description: "List all locations",
+      },
+      handler: (request, h) => {
+        return Location.query();
+      },
+    },
+    {
+      method: "DELETE",
+      path: "/locations/{id}",
+      config: {
+        description: "Delete a location",
+      },
+      handler: (request, h) => {
+        return Location.query()
+          .deleteById(request.params.id)
+          .then((rowsDeleted) => {
+            if (rowsDeleted === 1) {
+              return {
+                ok: true,
+                msge: `Deleted location with ID '${request.params.id}'`,
+              };
+            } else {
+              return {
+                ok: false,
+                msge: `Couldn't delete location with ID '${request.params.id}'`,
+              };
+            }
+          });
       },
     },
   ]);
