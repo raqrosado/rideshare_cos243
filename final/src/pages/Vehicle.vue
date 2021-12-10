@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <div>
-      <h4 class="display-1">Accounts</h4>
+      <h4 class="display-1">Vehicle</h4>
 
       <v-data-table
         class="elevation-1"

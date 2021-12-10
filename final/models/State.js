@@ -35,7 +35,7 @@ class State extends Model {
     }
 }
 
-module.exports = { State };
+module.exports = State;
 
 
 

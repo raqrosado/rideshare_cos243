@@ -27,4 +27,4 @@ class Driver extends Model {
     }
 }
 
-module.exports = { Driver };
+module.exports = Driver;

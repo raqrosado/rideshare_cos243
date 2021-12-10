@@ -27,4 +27,4 @@ class Location extends Model {
     }
 }
 
-module.exports = { Location };
+module.exports = Location;

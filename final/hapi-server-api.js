@@ -17,16 +17,17 @@ objection.Model.knex(knex);
 // Models
 const Vehicle = require("./models/Vehicle");
 const Location = require("./models/Location");
+const Account = require("./models/Account");
 
 
 const Driver = require("./models/Driver");
 const User = require("./models/User");
 const Ride = require("./models/Ride");
 const State = require("./models/State");
-const VehicleTyle = require("./models/VehicleTyle");
-const Authorization = require("./models/Authorization");
-const Drivers = require("./models/Drivers");
-const Passenger = require("./models/Passenger");
+const VehicleType = require("./models/VehicleType");
+// const Authorization = require("./models/Authorization");
+// const Drivers = require("./models/Drivers");
+// const Passenger = require("./models/Passenger");
 
 
 // Hapi
@@ -62,6 +63,67 @@ async function init() {
     {
       method: "POST",
       path: "/vehicle",
+      config: {
+        description: "Sign up your vehicle",
+        validate: {
+          payload: Joi.object({
+            make: Joi.string().required(),
+            model: Joi.string().required(),
+            color: Joi.string().required(),
+            capacity: Joi.number().integer().required(),
+            mpg: Joi.number().required(),
+            licensePlate: Joi.string().required(),        
+          }),
+        },
+      },
+      handler: async (request, h) => {
+        const existingVehicle = await Vehicle.query()
+          .where("licensePlate", request.payload.licensePlate)
+          .first();
+        if (existingVehicle) {
+          return {
+            ok: false,
+            msge: `A vehicle with license plate '${request.payload.licensePlate}' is already signed up`,
+          };
+        }
+
+        const newVehicle = await Vehicle.query().insert({
+          make: request.payload.make,
+          model: request.payload.model,
+          color: request.payload.color,
+          capacity: request.payload.capacity,
+          mpg: request.payload.mpg,
+          licensePlate: request.payload.licensePlate,
+        });
+
+        if (newAccount) {
+          return {
+            ok: true,
+            msge: `Created account '${request.payload.email}'`,
+          };
+        } else {
+          return {
+            ok: false,
+            msge: `Couldn't create account with email '${request.payload.email}'`,
+          };
+        }
+      },
+    },
+    {
+      method: "GET",
+      path: "/vehicle",
+      config: {
+        description: "Retrieve all accounts",
+      },
+      handler: (request, h) => {
+        return Vehicle.query();
+      },
+
+    },
+
+    {
+      method: "POST",
+      path: "/accounts",
       config: {
         description: "Sign up for an account",
         validate: {
@@ -163,12 +225,6 @@ async function init() {
         }
       },
     },
-
-
-
-
-
-
     {
       method: "GET",
       path: "/accounts",
@@ -245,6 +301,7 @@ async function init() {
     },
   ]);
 
+  
   // Start the server.
   await server.start();
 }

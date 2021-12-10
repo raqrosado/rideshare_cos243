@@ -6,4 +6,4 @@ class Vehicle extends Model {
     }
 }
 
-module.exports = { Vehicle };
+module.exports = Vehicle;

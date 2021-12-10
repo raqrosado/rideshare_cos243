@@ -28,4 +28,4 @@ class Ride extends Model {
 
 }
 
-module.exports = { Ride };
+module.exports = Ride;
