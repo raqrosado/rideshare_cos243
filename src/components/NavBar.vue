@@ -2,7 +2,7 @@
   <v-app-bar app dark color="primary">
     <router-link v-bind:to="{ name: 'home-page' }">
       <v-toolbar-title class="white--text">
-        Single Page App
+        Our Way Home <v-icon>mdi-car-side</v-icon>
       </v-toolbar-title>
     </router-link>
 
@@ -29,8 +29,8 @@
         <v-list-item v-bind:to="{ name: 'accounts' }">
           <v-list-item-title>Accounts</v-list-item-title>
         </v-list-item>
-        <v-list-item v-bind:to="{ name: 'locations' }">
-          <v-list-item-title>Locations</v-list-item-title>
+        <v-list-item v-bind:to="{ name: 'Location' }">
+          <v-list-item-title>Location</v-list-item-title>
         </v-list-item>
 
         <v-divider></v-divider>

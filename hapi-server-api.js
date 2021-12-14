@@ -297,7 +297,7 @@ async function init() {
     },
     {
       method: "POST",
-      path: "/locations",
+      path: "/Location",
       config: {
         description: "Create a new location",
         validate: {
@@ -347,9 +347,9 @@ async function init() {
     },
     {
       method: "GET",
-      path: "/locations",
+      path: "/Location",
       config: {
-        description: "List all locations",
+        description: "List all Location",
       },
       handler: (request, h) => {
         return Location.query();
@@ -357,7 +357,7 @@ async function init() {
     },
     {
       method: "DELETE",
-      path: "/locations/{id}",
+      path: "/Location/{id}",
       config: {
         description: "Delete a location",
       },
