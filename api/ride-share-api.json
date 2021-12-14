@@ -33,7 +33,7 @@
         "description": "Each user of **Ride Share**",
         "type": "object",
         "properties": {
-          "id": {
+          "id": { 
             "type": "integer"
           },
           "firstName": {
@@ -92,7 +92,7 @@
           "vehicleTypeId": { "type": "integer" },
           "capacity": { "type": "integer" },
           "mpg": { "type": "float" },
-          "licenseState": { "type": "integer" },
+          "licenseState": { "type": "string" },
           "licensePlate": { "type": "string" }
         },
         "example": {
@@ -103,7 +103,7 @@
           "vehicleTypeId": 48,
           "capacity": 1000,
           "mpg": 29,
-          "licenseState": 49,
+          "licenseState": "WI",
           "licensePlate": "BUCKSN6"
         }
       },
@@ -160,13 +160,13 @@
           "id": { "type": "integer" },
           "userId": { "type": "integer" },
           "licenseNumber": { "type": "string" },
-          "licenseState": { "type": "integer" }
+          "licenseState": { "type": "string" }
         },
         "example": {
           "id": 6,
           "userId": 42,
           "licenseNumber": "I1234568",
-          "licenseState": 18
+          "licenseState": "WI"
         }
       },
       "Passenger": {
@@ -584,7 +584,7 @@
                   "vehicleTypeId": { "type": "integer" },
                   "capacity": { "type": "integer" },
                   "mpg": { "type": "float" },
-                  "licenseState": { "type": "integer" },
+                  "licenseState": { "type": "string" },
                   "licensePlate": { "type": "string" }
                 },
                 "example": {
@@ -595,7 +595,7 @@
                   "vehicleTypeId": 48,
                   "capacity": 1000,
                   "mpg": 29,
-                  "licenseState": 49,
+                  "licenseState": "WI",
                   "licensePlate": "BUCKSN6"
                 }
               }
@@ -669,7 +669,7 @@
                   "vehicleTypeId": { "type": "integer" },
                   "capacity": { "type": "integer" },
                   "mpg": { "type": "float" },
-                  "licenseState": { "type": "integer" },
+                  "licenseState": { "type": "string" },
                   "licensePlate": { "type": "string" }
                 },
                 "example": {
@@ -679,7 +679,7 @@
                   "vehicleTypeId": 48,
                   "capacity": 1000,
                   "mpg": 29,
-                  "licenseState": 49,
+                  "licenseState": "WI",
                   "licensePlate": "BUCKSN6"
                 }
               }
@@ -739,13 +739,13 @@
                   "id": { "type": "integer" },
                   "userId": { "type": "integer" },
                   "licenseNumber": { "type": "string" },
-                  "licenseState": { "type": "integer" }
+                  "licenseState": { "type": "string" }
                 },
                 "example": {
                   "id": 6,
                   "userId": 42,
                   "licenseNumber": "I1234568",
-                  "licenseState": 18
+                  "licenseState": "WI"
                 }
               }
             }
@@ -814,12 +814,12 @@
                 "properties": {
                   "userId": { "type": "integer" },
                   "licenseNumber": { "type": "string" },
-                  "licenseState": { "type": "integer" }
+                  "licenseState": { "type": "string" }
                 },
                 "example": {
                   "userId": 42,
                   "licenseNumber": "I1234568",
-                  "licenseState": 18
+                  "licenseState": "WI"
                 }
               }
             }
@@ -991,7 +991,7 @@
         }
       },
       "get": {
-        "summary": "Retrieve all location",
+        "summary": "Retrieve all locations",
         "tags": ["location"],
         "responses": {
           "200": {
