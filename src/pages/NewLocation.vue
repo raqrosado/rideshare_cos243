@@ -1,48 +1,45 @@
 <template>
   <v-container>
     <div>
-      <h4 class="display-1">Reset Password</h4>
+      <h4 class="display-1">Create Location</h4>
 
-      <instructions details="Reset your password." />
+      <instructions details="Create a new location" />
 
       <v-form v-model="valid">
+        <v-text-field
+          v-model="location.name"
+          v-bind:rules="rules.required"
+          label="Location Name"
+        ></v-text-field>
+        <v-text-field
+          v-model="newMember.lastName"
+          v-bind:rules="rules.required"
+          label="Address"
+        ></v-text-field>
         <v-text-field
           v-model="newMember.email"
           v-bind:rules="rules.email"
           error-count="10"
-          type="email"
-          label="Your email address"
+          label="City"
         >
         </v-text-field>
         <v-text-field
-          v-model="newMember.oldpassword"
-          v-bind:rules="rules.oldpassword"
+          v-model="newMember.password"
+          v-bind:rules="rules.password"
           error-count="10"
-          type="password"
-          label="Your old password"
+          label="state"
           required
         >
         </v-text-field>
-         <v-text-field
-          v-model="newMember.newpassword"
-          v-bind:rules="rules.newpassword"
+        <v-text-field
+          v-model="newMember.password"
+          v-bind:rules="rules.password"
           error-count="10"
-          type="password"
-          label="Your new password"
+          label="zipCode"
           required
-        >
-        </v-text-field>
-         <v-text-field
-          v-model="newMember.confirmpassword"
-          v-bind:rules="[rules.confirmpassword, passwordConfirmationRule]"
-          error-count="10"
-          type="password"
-          label="Confirm new password"
-          required
-        >
-        </v-text-field>
+        ></v-text-field>
         <v-btn v-bind:disabled="!valid" v-on:click="handleSubmit"
-          >Reset Password
+          >Create Location
         </v-btn>
       </v-form>
 
@@ -73,27 +70,10 @@
 <script>
 import Instructions from "../components/Instructions.vue";
 
-/*
-data: function () {
-  return {
-
-  }
-}
-new Vue({
-  validators: {
-    checkSamePasswords: function(val) {return true;}
-  }
-});
-
-checkSamePasswords: function (val) {
-  return val == this.vm.password;  
-}
-*/
-
 export default {
-  name: "ResetPassword",
+  name: "NewLocation",
   components: {
-    Instructions, // Use the Instructions component we just imported
+    Instructions,
   },
   data: function () {
     return {
@@ -101,14 +81,14 @@ export default {
 
       // Object to collect account data
       newMember: {
-        email: "",
-        oldpassword: "",
-        newpassword: "",
-        confirmpassword: "",
+        address: "",
+        city: "",
+        state: "",
+        zipCode: "",
       },
 
       // Was an account created successfully?
-      passwordReset: false,
+      accountCreated: false,
 
       // Data to be displayed by the dialog.
       dialogHeader: "<no dialogHeader>",
@@ -123,58 +103,29 @@ export default {
       // containing an error message indicating why the field doesn't pass validation.
       rules: {
         required: [(val) => val.length > 0 || "Required"],
-        email: [
-          (val) => /\w{3,}@\w{3,}(?:.\w{3,})+$/.test(val) || "Invalid e-mail",
-        ],
-        oldpassword: [
-          (val) => /[A-Z]/.test(val) || "Need upper case letter",
-          (val) => /[a-z]/.test(val) || "Need lower case letter",
-          (val) => /\d/.test(val) || "Need digit",
-          (val) => val.length >= 8 || "Minimum 8 characters",
-        ],
-        newpassword: [
-          (val) => /[A-Z]/.test(val) || "Need upper case letter",
-          (val) => /[a-z]/.test(val) || "Need lower case letter",
-          (val) => /\d/.test(val) || "Need digit",
-          (val) => val.length >= 8 || "Minimum 8 characters",
-        ],
-        confirmpassword: [
-          (val) => /[A-Z]/.test(val) || "Need upper case letter",
-          (val) => /[a-z]/.test(val) || "Need lower case letter",
-          (val) => /\d/.test(val) || "Need digit",
-          (val) => val.length >= 8 || "Minimum 8 characters",
-          /* (val) => val == newMember[newpassword] || "Needs to be the same as your new password",
-
-          (val) => rules.newpassword || "Equal to new password", */
-        ],
-
       },
-      computed: {
-        passwordConfirmationRule() {
-          return() => (this.password === this.rePassword) || "Password must match"
-        }
-      }
     };
   },
   methods: {
     // Invoked when the user clicks the 'Sign Up' button.
     handleSubmit: function () {
       // Haven't been successful yet.
-      this.passwordReset = false;
+      this.accountCreated = false;
 
       // Post the content of the form to the Hapi server.
       this.$axios
-        .put("/reset-password", {
-          email: this.newMember.email,
-          password: this.newMember.newpassword,
-          oldpassword: this.newMember.oldpassword,
+        .post("/Location", {
+          address: this.location.address,
+          city: this.location.city,
+          state: this.location.state,
+          zipCode: this.location.zipCode,
         })
         .then((result) => {
           // Based on whether things worked or not, show the
           // appropriate dialog.
           if (result.data.ok) {
             this.showDialog("Success", result.data.msge);
-            this.passwordReset = true;
+            this.accountCreated = true;
           } else {
             this.showDialog("Sorry", result.data.msge);
           }
@@ -193,7 +144,7 @@ export default {
     // and navigate to the home page.
     hideDialog: function () {
       this.dialogVisible = false;
-      if (this.passwordReset) {
+      if (this.accountCreated) {
         // Only navigate away from the sign-up page if we were successful.
         this.$router.push({ name: "home-page" });
       }

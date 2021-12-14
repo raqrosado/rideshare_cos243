@@ -8,6 +8,7 @@ import ResetPassword from "./pages/ResetPassword.vue";
 import About from "./pages/About.vue";
 import Accounts from "./pages/Accounts.vue";
 import Location from "./pages/Location.vue";
+import NewLocation from "./pages/NewLocation.vue";
 
 Vue.use(Router);
 
@@ -21,6 +22,8 @@ export default new Router({
     { name: "reset-password", path: "/reset-password", component: ResetPassword },
     { name: "about-us", path: "/about-us", component: About },
     { name: "accounts", path: "/accounts", component: Accounts },
-    { name: "Location", path: "/Location", component: Location }
+    { name: "location", path: "/location", component: Location },
+    { name: "newlocation", path: "/newlocation", component: NewLocation }
+
   ]
 });

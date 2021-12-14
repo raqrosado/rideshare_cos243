@@ -29,10 +29,17 @@
         <v-list-item v-bind:to="{ name: 'accounts' }">
           <v-list-item-title>Accounts</v-list-item-title>
         </v-list-item>
+        <v-divider></v-divider>
         <v-list-item v-bind:to="{ name: 'Location' }">
           <v-list-item-title>Location</v-list-item-title>
         </v-list-item>
-
+        <v-divider></v-divider>
+        <v-list-item
+          @click="NewLocation"
+          v-bind:to="{ name: 'newlocation' }"
+        >
+          <v-list-item-title>New Location</v-list-item-title>
+        </v-list-item>
         <v-divider></v-divider>
 
         <v-list-item @click="signOut">
@@ -41,7 +48,10 @@
 
         <v-divider></v-divider>
 
-        <v-list-item @click="ResetPassword" v-bind:to="{ name: 'reset-password' }">
+        <v-list-item
+          @click="ResetPassword"
+          v-bind:to="{ name: 'reset-password' }"
+        >
           <v-list-item-title>Reset Password</v-list-item-title>
         </v-list-item>
       </v-list>
@@ -54,7 +64,7 @@ export default {
   computed: {
     isLoggedIn() {
       return this.$store.getters.isLoggedIn;
-    }
+    },
   },
 
   methods: {
@@ -63,7 +73,7 @@ export default {
       if (this.$router.currentRoute.name != "home-page") {
         this.$router.push({ name: "home-page" });
       }
-    }
-  }
+    },
+  },
 };
 </script>
