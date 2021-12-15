@@ -32,6 +32,9 @@
         <v-list-item v-bind:to="{ name: 'locations' }">
           <v-list-item-title>Locations</v-list-item-title>
         </v-list-item>
+        <v-list-item v-bind:to="{ name: 'vehicles' }">
+          <v-list-item-title>Vehicles</v-list-item-title>
+        </v-list-item>
 
         <v-divider></v-divider>
 

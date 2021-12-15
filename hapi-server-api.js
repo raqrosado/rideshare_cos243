@@ -56,8 +56,18 @@ async function init() {
   // Configure routes.
   server.route([
     {
+      method: "GET",
+      path: "/vehicles",
+      config: {
+        description: "Retrieve all accounts",
+      },
+      handler: (request, h) => {
+        return Vehicle.query();
+      },
+    },
+    {
       method: "POST",
-      path: "/vehicle",
+      path: "/vehicles",
       config: {
         description: "Sign up your vehicle",
         validate: {
@@ -89,33 +99,71 @@ async function init() {
           capacity: request.payload.capacity,
           mpg: request.payload.mpg,
           licensePlate: request.payload.licensePlate,
+
         });
 
-        if (newAccount) {
+        if (newVehicle) {
           return {
             ok: true,
-            msge: `Created account '${request.payload.email}'`,
+            msge: `Created vehicle with license plate: '${request.payload.licensePlate}'`,
           };
         } else {
           return {
             ok: false,
-            msge: `Couldn't create account with email '${request.payload.email}'`,
+            msge: `Couldn't create a new vehicle with license plate: '${request.payload.licensePlate}'`,
           };
         }
       },
+    }, 
+    {
+      method: "PATCH",
+      path: "/vehicles/{id}",
+      options: {
+        description: "Update an existing vehicle",
+        validate: {
+          params: Joi.object ({
+            id: Joi.number().integer().min(1),
+          }),
+          payload: Joi.object ({
+            make: Joi.string(),
+            model: Joi.string(),
+            color: Joi.string(),
+            capacity: Joi.number().integer(),
+            mpg: Joi.number(),
+            licensePlate: Joi.string(),
+          }),
+        },
+      },
+      handler: async (request, h) => {
+        if (!(await Vehicle.query().findById(request.params.id))) {
+          return h.response(`Vehicle ${request.params.id} not found`).code(404);
+        }
+        return Vehicle.query()
+          .findById(request.params.id)
+          .patch(request.payload);
+      }
     },
     {
-      method: "GET",
-      path: "/vehicle",
-      config: {
-        description: "Retrieve all accounts",
+      method: "DELETE",
+      path: "/vehicles/{id}",
+      options: {
+        description: "Delete an existing vehicle",
+        validate: {
+          params: Joi.object ({
+            id: Joi.number().integer().min(1),
+          }),
+        },
       },
-      handler: (request, h) => {
-        return Vehicle.query();
-      },
+      handler: async (request, h) => {
+        if (!(await Vehicle.query().findById(request.params.id))) {
+          return h.response(`Vehicle ${request.params.id} not found`).code(404);
+        }
 
+        return Vehicle.query()
+          .where("id", request.params.id)
+          .delete();
+      }
     },
-
     {
       method: "POST",
       path: "/accounts",

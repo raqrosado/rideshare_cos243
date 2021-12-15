@@ -6,18 +6,23 @@
       <v-data-table
         class="elevation-1"
         v-bind:headers="headers"
-        v-bind:items="accounts"
+        v-bind:items="Vehicle"
       >
         <template v-slot:item="{ item }">
           <tr v-bind:class="itemClass(item)">
-            <td>{{ item.email }}</td>
-            <td>{{ item.firstName }}</td>
-            <td>{{ item.lastName }}</td>
+            <td>{{ item.make }}</td>
+            <td>{{ item.model }}</td>
+            <td>{{ item.color }}</td>
+            <td>{{ item.vehicleTypeId }}</td>
+            <td>{{ item.capacity }}</td>
+            <td>{{ item.mpg }}</td>
+            <td>{{ item.licenseState }}</td>
+            <td>{{ item.licensePlate }}</td>
             <td>
-              <v-icon small @click="deleteAccount(item)">
+              <v-icon small @click="deleteVehicle(item)">
                 mdi-delete
               </v-icon>
-              <v-icon small class="ml-2" @click="updateAccount(item)">
+              <v-icon small class="ml-2" @click="updateVehicle(item)">
                 mdi-pencil
               </v-icon>
             </td>
@@ -37,17 +42,21 @@
 
 <script>
 export default {
-  name: "Accounts",
+  name: "Vehicles",
 
   data: function() {
     return {
       headers: [
-        { text: "Email", value: "email" },
-        { text: "First", value: "firstName" },
-        { text: "Last", value: "lastName" },
-        { text: "Action", value: "action" }
+        { text: "Make", value: "make" },
+        { text: "Model", value: "model" },
+        { text: "Color", value: "color" },
+        { text: "Id for Vehicle Type", value: "vehicleTypeId" },
+        { text: "Capacity", value: "capacity" },
+        { text: "MPG", value: "mpg" },
+        { text: "License State", value: "licenseState" },
+        { text: "License Plate", value: "licensePlate" }
       ],
-      accounts: [],
+      vehicles: [],
 
       snackbar: {
         show: false,
@@ -57,12 +66,17 @@ export default {
   },
 
   mounted: function() {
-    this.$axios.get("/accounts").then(response => {
-      this.accounts = response.data.map(account => ({
-        id: account.id,
-        email: account.email,
-        firstName: account.first_name,
-        lastName: account.last_name
+    this.$axios.get("/vehicles").then(response => {
+      this.vehicles = response.data.map(vehicle => ({
+        id: vehicle.id,
+        make: vehicle.make,
+        model: vehicle.model,
+        color: vehicle.color,
+        vehicleTypeId: vehicle.vehicleTypeId,
+        capacity: vehicle.capacity,
+        mpg: vehicle.mpg,
+        licenseState: vehicle.licenseState,
+        licensePlate: vehicle.licensePlate
       }));
     });
   },
@@ -76,26 +90,26 @@ export default {
 
     // Calculate the CSS class for an item
     itemClass(item) {
-      const currentAccount = this.$store.state.currentAccount;
-      if (currentAccount && currentAccount.id === item.id) {
-        return "currentAccount";
+      const currentVehicle = this.$store.state.currentVehicle;
+      if (currentVehicle && currentVehicle.id === item.id) {
+        return "currentVehicle";
       }
     },
 
-    // Update account information.
-    updateAccount(item) {
+    // Update vehicle information.
+    updateVehicle(item) {
       console.log("UPDATE", JSON.stringify(item, null, 2));
       this.showSnackbar("Sorry, update is not yet implemented.");
     },
 
-    // Delete an account.
-    deleteAccount(item) {
-      this.$axios.delete(`/accounts/${item.id}`).then(response => {
+    // Delete an vehicle.
+    deleteVehicle(item) {
+      this.$axios.delete(`/vehicles/${item.id}`).then(response => {
         if (response.data.ok) {
-          // The delete operation worked on the server; delete the local account
-          // by filtering the deleted account from the list of accounts.
-          this.accounts = this.accounts.filter(
-            account => account.id !== item.id
+          // The delete operation worked on the server; delete the local vehicle
+          // by filtering the deleted vehicle from the list of vehicles.
+          this.vehicles = this.vehicles.filter(
+            vehicle => vehicle.id !== item.id
           );
         }
       });
@@ -105,7 +119,7 @@ export default {
 </script>
 
 <style>
-.currentAccount {
+.currentVehicle {
   background: lightcoral;
 }
 </style>
