@@ -17,7 +17,7 @@ objection.Model.knex(knex);
 // Models
 const User = require("./models/User");
 const Driver = require("./models/Driver");
-const State = require("./models/State"); 
+const State = require("./models/State");
 const Ride = require("./models/Ride");
 const Location = require("./models/Location");
 const Vehicle = require("./models/Vehicle");
@@ -72,10 +72,12 @@ async function init() {
             model: Joi.string().required(),
             color: Joi.string().required(),
             vehicleTypeId: Joi.number().required(),
-            capacity: Joi.number().integer().required(),
+            capacity: Joi.number()
+              .integer()
+              .required(),
             mpg: Joi.number().required(),
             licenseState: Joi.string().required(),
-            licensePlate: Joi.string().required(),        
+            licensePlate: Joi.string().required(),
           }),
         },
       },
@@ -113,17 +115,19 @@ async function init() {
           };
         }
       },
-    }, 
+    },
     {
       method: "PATCH",
       path: "/vehicles/{id}",
       options: {
         description: "Update an existing vehicle",
         validate: {
-          params: Joi.object ({
-            id: Joi.number().integer().min(1),
+          params: Joi.object({
+            id: Joi.number()
+              .integer()
+              .min(1),
           }),
-          payload: Joi.object ({
+          payload: Joi.object({
             make: Joi.string(),
             model: Joi.string(),
             color: Joi.string(),
@@ -140,7 +144,7 @@ async function init() {
         return Vehicle.query()
           .findById(request.params.id)
           .patch(request.payload);
-      }
+      },
     },
     {
       method: "DELETE",
@@ -148,8 +152,10 @@ async function init() {
       options: {
         description: "Delete an existing vehicle",
         validate: {
-          params: Joi.object ({
-            id: Joi.number().integer().min(1),
+          params: Joi.object({
+            id: Joi.number()
+              .integer()
+              .min(1),
           }),
         },
       },
@@ -162,7 +168,7 @@ async function init() {
           .where("id", request.params.id)
           .first()
           .del();
-      }
+      },
     },
     {
       method: "GET",
@@ -186,9 +192,15 @@ async function init() {
             distance: Joi.number().required(),
             fuelPrice: Joi.number().required(),
             fee: Joi.number().required(),
-            vehicleId: Joi.number().integer().required(),
-            fromLocationId: Joi.number().integer().required(),
-            toLocationId: Joi.number().integer().required()
+            vehicleId: Joi.number()
+              .integer()
+              .required(),
+            fromLocationId: Joi.number()
+              .integer()
+              .required(),
+            toLocationId: Joi.number()
+              .integer()
+              .required(),
           }),
         },
       },
@@ -231,17 +243,19 @@ async function init() {
           };
         }
       },
-    }, 
+    },
     {
       method: "PATCH",
       path: "/rides/{id}",
       options: {
         description: "Update an existing ride",
         validate: {
-          params: Joi.object ({
-            id: Joi.number().integer().min(1),
+          params: Joi.object({
+            id: Joi.number()
+              .integer()
+              .min(1),
           }),
-          payload: Joi.object ({
+          payload: Joi.object({
             date: Joi.string(),
             time: Joi.string(),
             distance: Joi.number(),
@@ -249,7 +263,7 @@ async function init() {
             fee: Joi.number(),
             vehicleId: Joi.number().integer(),
             fromLocationId: Joi.number().integer(),
-            toLocationId: Joi.number().integer()
+            toLocationId: Joi.number().integer(),
           }),
         },
       },
@@ -260,7 +274,7 @@ async function init() {
         return Ride.query()
           .findById(request.params.id)
           .patch(request.payload);
-      }
+      },
     },
     {
       method: "DELETE",
@@ -268,8 +282,10 @@ async function init() {
       options: {
         description: "Delete an existing ride",
         validate: {
-          params: Joi.object ({
-            id: Joi.number().integer().min(1),
+          params: Joi.object({
+            id: Joi.number()
+              .integer()
+              .min(1),
           }),
         },
       },
@@ -282,7 +298,7 @@ async function init() {
           .where("id", request.params.id)
           .first()
           .del();
-      }
+      },
     },
     {
       method: "GET",
@@ -332,29 +348,33 @@ async function init() {
           };
         }
       },
-    }, 
+    },
     {
       method: "PATCH",
       path: "/vehicle-types/{id}",
       options: {
         description: "Update an existing vehicle type",
         validate: {
-          params: Joi.object ({
-            id: Joi.number().integer().min(1),
+          params: Joi.object({
+            id: Joi.number()
+              .integer()
+              .min(1),
           }),
-          payload: Joi.object ({
+          payload: Joi.object({
             vehicleType: Joi.string(),
           }),
         },
       },
       handler: async (request, h) => {
         if (!(await VehicleType.query().findById(request.params.id))) {
-          return h.response(`Vehicle Type ${request.params.id} not found`).code(404);
+          return h
+            .response(`Vehicle Type ${request.params.id} not found`)
+            .code(404);
         }
         return VehicleType.query()
           .findById(request.params.id)
           .patch(request.payload);
-      }
+      },
     },
     {
       method: "DELETE",
@@ -362,8 +382,10 @@ async function init() {
       options: {
         description: "Delete an existing vehicle type",
         validate: {
-          params: Joi.object ({
-            id: Joi.number().integer().min(1),
+          params: Joi.object({
+            id: Joi.number()
+              .integer()
+              .min(1),
           }),
         },
       },
@@ -376,7 +398,7 @@ async function init() {
           .where("id", request.params.id)
           .first()
           .del();
-      }
+      },
     },
     {
       method: "GET",
@@ -397,7 +419,7 @@ async function init() {
           payload: Joi.object({
             userId: Joi.number().required(),
             licenseNumber: Joi.string().required(),
-            licenseState: Joi.string().required()
+            licenseState: Joi.string().required(),
           }),
         },
       },
@@ -430,17 +452,19 @@ async function init() {
           };
         }
       },
-    }, 
+    },
     {
       method: "PATCH",
       path: "/drivers/{id}",
       options: {
         description: "Update an existing driver",
         validate: {
-          params: Joi.object ({
-            id: Joi.number().integer().min(1),
+          params: Joi.object({
+            id: Joi.number()
+              .integer()
+              .min(1),
           }),
-          payload: Joi.object ({
+          payload: Joi.object({
             userId: Joi.number(),
             licenseNumber: Joi.string(),
             licenseState: Joi.string(),
@@ -454,7 +478,7 @@ async function init() {
         return Driver.query()
           .findById(request.params.id)
           .patch(request.payload);
-      }
+      },
     },
     {
       method: "DELETE",
@@ -462,8 +486,10 @@ async function init() {
       options: {
         description: "Delete an existing driver",
         validate: {
-          params: Joi.object ({
-            id: Joi.number().integer().min(1),
+          params: Joi.object({
+            id: Joi.number()
+              .integer()
+              .min(1),
           }),
         },
       },
@@ -476,7 +502,7 @@ async function init() {
           .where("id", request.params.id)
           .first()
           .del();
-      }
+      },
     },
     {
       method: "GET",
@@ -500,7 +526,7 @@ async function init() {
             email: Joi.string().required(),
             password: Joi.string().required(),
             phone: Joi.string().required(),
-            isAdmin: Joi.boolean().required(),       
+            isAdmin: Joi.boolean().required(),
           }),
         },
       },
@@ -536,15 +562,17 @@ async function init() {
           };
         }
       },
-    }, 
+    },
     {
       method: "GET",
       path: "/users/{id}",
       options: {
         description: "Retrieve user by ID",
         validate: {
-          params: Joi.object ({
-            id: Joi.number().integer().min(1),
+          params: Joi.object({
+            id: Joi.number()
+              .integer()
+              .min(1),
           }),
         },
       },
@@ -560,9 +588,13 @@ async function init() {
       options: {
         description: "Add a passenger to a ride",
         validate: {
-          params: Joi.object ({
-            userId: Joi.number().integer().min(1),
-            rideId: Joi.number().integer().min(1),
+          params: Joi.object({
+            userId: Joi.number()
+              .integer()
+              .min(1),
+            rideId: Joi.number()
+              .integer()
+              .min(1),
           }),
         },
       },
@@ -579,8 +611,10 @@ async function init() {
       options: {
         description: "Delete an existing passenger",
         validate: {
-          params: Joi.object ({
-            id: Joi.number().integer().min(1),
+          params: Joi.object({
+            id: Joi.number()
+              .integer()
+              .min(1),
           }),
         },
       },
@@ -593,7 +627,7 @@ async function init() {
           .where("id", request.params.id)
           .first()
           .del();
-      }
+      },
     },
     {
       method: "POST",
@@ -604,7 +638,9 @@ async function init() {
           payload: Joi.object({
             firstName: Joi.string().required(),
             lastName: Joi.string().required(),
-            email: Joi.string().email().required(),
+            email: Joi.string()
+              .email()
+              .required(),
             password: Joi.string().required(),
           }),
         },
@@ -648,7 +684,9 @@ async function init() {
         description: "Reset password",
         validate: {
           payload: Joi.object({
-            email: Joi.string().email().required(),
+            email: Joi.string()
+              .email()
+              .required(),
             password: Joi.string().required(),
             oldpassword: Joi.string().required(),
           }),
@@ -743,8 +781,12 @@ async function init() {
         description: "Log in",
         validate: {
           payload: Joi.object({
-            email: Joi.string().email().required(),
-            password: Joi.string().min(8).required(),
+            email: Joi.string()
+              .email()
+              .required(),
+            password: Joi.string()
+              .min(8)
+              .required(),
           }),
         },
       },
@@ -860,7 +902,6 @@ async function init() {
     },
   ]);
 
-  
   // Start the server.
   await server.start();
 }

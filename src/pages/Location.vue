@@ -100,7 +100,7 @@ export default {
           // The delete operation worked on the server; delete the local location
           // by filtering the deleted location from the list of Location.
           this.Location = this.Location.filter(
-            location => location.id !== item.id
+            Location => Location.id !== item.id
           );
         }
       });
@@ -111,6 +111,6 @@ export default {
 
 <style>
 .currentLocation {
-  background: lightcoral;
+  background: lightblue;
 }
 </style>

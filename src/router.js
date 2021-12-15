@@ -9,6 +9,7 @@ import About from "./pages/About.vue";
 import Accounts from "./pages/Accounts.vue";
 import Location from "./pages/Location.vue";
 import Vehicle from "./pages/Vehicle.vue";
+// import NewVehicle from "./pages/NewVehicle.vue";
 import NewLocation from "./pages/NewLocation.vue";
 
 Vue.use(Router);
