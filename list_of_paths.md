@@ -41,7 +41,7 @@ Drivers
     /drivers/{id}       DELETE  "Delete an existing drivers"
 
 Location 
-    /location           GET     "Retrieve all locations"
+    /location           GET     "Retrieve all Locations"
     /location           POST    "Create a new location"
     /location/{id}      PATCH   "Update an existing location"
     /location/{id}      DELETE  "Delete an existing location"

@@ -1,12 +1,12 @@
 <template>
   <v-container>
     <div>
-      <h4 class="display-1">Locations</h4>
+      <h4 class="display-1">Location</h4>
 
       <v-data-table
         class="elevation-1"
         v-bind:headers="headers"
-        v-bind:items="Locations"
+        v-bind:items="Location"
       >
         <template v-slot:item="{ item }">
           <tr v-bind:class="itemClass(item)">
@@ -39,7 +39,7 @@
 
 <script>
 export default {
-  name: "Locations",
+  name: "Location",
 
   data: function() {
     return {
@@ -51,7 +51,7 @@ export default {
         { text: "Zip Code", value: "zipCode" },
         { text: "Action", value: "action" }
       ],
-      locations: [],
+      Location: [],
 
       snackbar: {
         show: false,
@@ -61,8 +61,8 @@ export default {
   },
 
   mounted: function() {
-    this.$axios.get("/locations").then(response => {
-      this.locations = response.data.map(location => ({
+    this.$axios.get("/Location").then(response => {
+      this.Location = response.data.map(location => ({
         id: location.id,
         address: location.address,
         city: location.city,
@@ -95,16 +95,16 @@ export default {
 
     // Delete an location.
     deleteLocation(item) {
-      this.$axios.delete(`/locations/${item.id}`).then(response => {
+      this.$axios.delete(`/Location/${item.id}`).then(response => {
         if (response.data.ok) {
           // The delete operation worked on the server; delete the local location
-          // by filtering the deleted location from the list of locations.
-          this.locations = this.locations.filter(
+          // by filtering the deleted location from the list of Location.
+          this.Location = this.Location.filter(
             location => location.id !== item.id
           );
         }
       });
-    }
+    },
   }
 };
 </script>

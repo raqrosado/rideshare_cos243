@@ -134,7 +134,7 @@
         }
       },
       "Location": {
-        "description": "The starting and ending Locations for Rides",
+        "description": "The starting and ending Location for Rides",
         "type": "object",
         "properties": {
           "id": { "type": "integer" },
@@ -991,7 +991,7 @@
         }
       },
       "get": {
-        "summary": "Retrieve all locations",
+        "summary": "Retrieve all Locations",
         "tags": ["location"],
         "responses": {
           "200": {
@@ -1008,7 +1008,7 @@
             }
           },
           "400": {
-            "description": "Can't get locations"
+            "description": "Can't get Location"
           }
         }
       }

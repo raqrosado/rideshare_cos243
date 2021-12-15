@@ -14,9 +14,7 @@
             <td>{{ item.firstName }}</td>
             <td>{{ item.lastName }}</td>
             <td>
-              <v-icon small @click="deleteAccount(item)">
-                mdi-delete
-              </v-icon>
+              <v-icon small @click="deleteAccount(item)"> mdi-delete </v-icon>
               <v-icon small class="ml-2" @click="updateAccount(item)">
                 mdi-pencil
               </v-icon>
@@ -27,9 +25,7 @@
 
       <v-snackbar v-model="snackbar.show">
         {{ snackbar.text }}
-        <v-btn color="blue" text @click="snackbar.show = false">
-          Close
-        </v-btn>
+        <v-btn color="blue" text @click="snackbar.show = false"> Close </v-btn>
       </v-snackbar>
     </div>
   </v-container>
@@ -39,30 +35,30 @@
 export default {
   name: "Accounts",
 
-  data: function() {
+  data: function () {
     return {
       headers: [
         { text: "Email", value: "email" },
         { text: "First", value: "firstName" },
         { text: "Last", value: "lastName" },
-        { text: "Action", value: "action" }
+        { text: "Action", value: "action" },
       ],
       accounts: [],
 
       snackbar: {
         show: false,
-        text: ""
-      }
+        text: "",
+      },
     };
   },
 
-  mounted: function() {
-    this.$axios.get("/accounts").then(response => {
-      this.accounts = response.data.map(account => ({
+  mounted: function () {
+    this.$axios.get("/accounts").then((response) => {
+      this.accounts = response.data.map((account) => ({
         id: account.id,
         email: account.email,
         firstName: account.first_name,
-        lastName: account.last_name
+        lastName: account.last_name,
       }));
     });
   },
@@ -85,27 +81,36 @@ export default {
     // Update account information.
     updateAccount(item) {
       console.log("UPDATE", JSON.stringify(item, null, 2));
+      // this.$axios.updateAccount(`/accounts/${item.id}`).then((response) => {
+        // if (response.data.ok) {
+          // The delete operation worked on the server; delete the local account
+          // by filtering the deleted account from the list of accounts.
+          // this.accounts = this.accounts.filter(
+            // (account) => account.id !== item.id
+          // );
+        // }
+      // });
       this.showSnackbar("Sorry, update is not yet implemented.");
     },
 
     // Delete an account.
     deleteAccount(item) {
-      this.$axios.delete(`/accounts/${item.id}`).then(response => {
+      this.$axios.delete(`/accounts/${item.id}`).then((response) => {
         if (response.data.ok) {
           // The delete operation worked on the server; delete the local account
           // by filtering the deleted account from the list of accounts.
           this.accounts = this.accounts.filter(
-            account => account.id !== item.id
+            (account) => account.id !== item.id
           );
         }
       });
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style>
 .currentAccount {
-  background: lightcoral;
+  background: lightblue;
 }
 </style>

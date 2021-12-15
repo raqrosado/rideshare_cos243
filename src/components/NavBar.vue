@@ -2,7 +2,7 @@
   <v-app-bar app dark color="primary">
     <router-link v-bind:to="{ name: 'home-page' }">
       <v-toolbar-title class="white--text">
-        Single Page App
+        Our Way Home <v-icon>mdi-car-side</v-icon>
       </v-toolbar-title>
     </router-link>
 
@@ -29,13 +29,24 @@
         <v-list-item v-bind:to="{ name: 'accounts' }">
           <v-list-item-title>Accounts</v-list-item-title>
         </v-list-item>
-        <v-list-item v-bind:to="{ name: 'locations' }">
-          <v-list-item-title>Locations</v-list-item-title>
+        <v-divider></v-divider>
+        <v-list-item v-bind:to="{ name: 'Location' }">
+          <v-list-item-title>Location</v-list-item-title>
         </v-list-item>
+        <v-divider></v-divider>
+        <v-list-item
+          @click="NewLocation"
+          v-bind:to="{ name: 'newlocation' }"
+        >
+          <v-list-item-title>New Location</v-list-item-title>
+        </v-list-item>
+<<<<<<< HEAD
         <v-list-item v-bind:to="{ name: 'vehicles' }">
           <v-list-item-title>Vehicles</v-list-item-title>
         </v-list-item>
 
+=======
+>>>>>>> 1b0dc9e4c5bbae004560c3650b421aa1b7e22878
         <v-divider></v-divider>
 
         <v-list-item @click="signOut">
@@ -44,7 +55,10 @@
 
         <v-divider></v-divider>
 
-        <v-list-item @click="ResetPassword" v-bind:to="{ name: 'reset-password' }">
+        <v-list-item
+          @click="ResetPassword"
+          v-bind:to="{ name: 'reset-password' }"
+        >
           <v-list-item-title>Reset Password</v-list-item-title>
         </v-list-item>
       </v-list>
@@ -57,7 +71,7 @@ export default {
   computed: {
     isLoggedIn() {
       return this.$store.getters.isLoggedIn;
-    }
+    },
   },
 
   methods: {
@@ -66,7 +80,7 @@ export default {
       if (this.$router.currentRoute.name != "home-page") {
         this.$router.push({ name: "home-page" });
       }
-    }
-  }
+    },
+  },
 };
 </script>
