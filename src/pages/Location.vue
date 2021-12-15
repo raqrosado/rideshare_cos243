@@ -2,7 +2,7 @@
   <v-container>
     <div>
       <h4 class="display-1">Location</h4>
-
+      <br />
       <v-data-table
         class="elevation-1"
         v-bind:headers="headers"
@@ -16,9 +16,7 @@
             <td>{{ item.state }}</td>
             <td>{{ item.zipCode }}</td>
             <td>
-              <v-icon small @click="deleteLocation(item)">
-                mdi-delete
-              </v-icon>
+              <v-icon small @click="deleteLocation(item)"> mdi-delete </v-icon>
               <v-icon small class="ml-2" @click="updateLocation(item)">
                 mdi-pencil
               </v-icon>
@@ -29,9 +27,7 @@
 
       <v-snackbar v-model="snackbar.show">
         {{ snackbar.text }}
-        <v-btn color="blue" text @click="snackbar.show = false">
-          Close
-        </v-btn>
+        <v-btn color="blue" text @click="snackbar.show = false"> Close </v-btn>
       </v-snackbar>
     </div>
   </v-container>
@@ -41,7 +37,7 @@
 export default {
   name: "Location",
 
-  data: function() {
+  data: function () {
     return {
       headers: [
         { text: "Name", value: "name" },
@@ -49,25 +45,26 @@ export default {
         { text: "City", value: "city" },
         { text: "State", value: "state" },
         { text: "Zip Code", value: "zipCode" },
-        { text: "Action", value: "action" }
+        { text: "Action", value: "action" },
       ],
       Location: [],
 
       snackbar: {
         show: false,
-        text: ""
-      }
+        text: "",
+      },
     };
   },
 
-  mounted: function() {
-    this.$axios.get("/Location").then(response => {
-      this.Location = response.data.map(location => ({
+  mounted: function () {
+    this.$axios.get("/Location").then((response) => {
+      this.Location = response.data.map((location) => ({
         id: location.id,
+        name: location.name,
         address: location.address,
         city: location.city,
         state: location.state,
-        zipCode: location.zipCode
+        zipCode: location.zipCode,
       }));
     });
   },
@@ -95,17 +92,17 @@ export default {
 
     // Delete an location.
     deleteLocation(item) {
-      this.$axios.delete(`/Location/${item.id}`).then(response => {
+      this.$axios.delete(`/Location/${item.id}`).then((response) => {
         if (response.data.ok) {
           // The delete operation worked on the server; delete the local location
           // by filtering the deleted location from the list of Location.
           this.Location = this.Location.filter(
-            Location => Location.id !== item.id
+            (Location) => Location.id !== item.id
           );
         }
       });
     },
-  }
+  },
 };
 </script>
 
