@@ -29,7 +29,9 @@
         <v-list-item v-bind:to="{ name: 'accounts' }">
           <v-list-item-title>Accounts</v-list-item-title>
         </v-list-item>
+
         <v-divider></v-divider>
+
         <v-list-item v-bind:to="{ name: 'Location' }">
           <v-list-item-title>Location</v-list-item-title>
         </v-list-item>
@@ -38,15 +40,21 @@
           @click="NewLocation"
           v-bind:to="{ name: 'newlocation' }"
         >
-          <v-list-item-title>New Location</v-list-item-title>
+        <v-list-item-title>New Location</v-list-item-title>
         </v-list-item>
-<<<<<<< HEAD
+
+
         <v-list-item v-bind:to="{ name: 'vehicles' }">
           <v-list-item-title>Vehicles</v-list-item-title>
         </v-list-item>
+        <v-divider></v-divider>
 
-=======
->>>>>>> 1b0dc9e4c5bbae004560c3650b421aa1b7e22878
+        <v-list-item
+          @click="NewVehicle"
+          v-bind:to="{ name: 'newvehicle' }"
+        >
+        <v-list-item-title>New Vehicle</v-list-item-title>
+        </v-list-item>
         <v-divider></v-divider>
 
         <v-list-item @click="signOut">

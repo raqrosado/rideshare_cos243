@@ -1,17 +1,25 @@
 INSERT INTO "user" ("firstName", "lastName", "email", "password", "phone", "isAdmin")
 VALUES ('Raquel', 'Rosado', 'rockrosado@gmail.com', 'Passw0rd', '414-232-1010', true );
+INSERT INTO "user" ("firstName", "lastName", "email", "password", "phone", "isAdmin")
+VALUES ('Marcos', 'Rosado', 'marcos@gmail.com', 'Passw0rd', '414-272-1010', false );
 
 INSERT INTO driver ("userId", "licenseNumber", "licenseState")
 VALUES (1, 'ABC123', 'WI');
-
+INSERT INTO driver ("userId", "licenseNumber", "licenseState")
+VALUES (2, '1234BC', 'IL');
 
 
 INSERT INTO passenger ("userId", "rideId")
-VALUES (1, );
+VALUES (1, 1);
 
-
+-- option one that does not include the FKs
 INSERT INTO vehicle ("make", "model", "color", "capacity", "mpg", "licensePlate")
 VALUES ('Ford', 'F150', 'black', 5, 25, '123ABC');
+-- option two that does include the FKs
+INSERT INTO vehicle ("make", "model", "color", "vehicleTypeId", "capacity", "mpg", "licenseState", "licensePlate")
+VALUES ('Ford', 'F150', 'black', 1, 5, 25, 'WI', '123ABC');
+
+
 
 INSERT INTO ride (date, time, distance, "fuelPrice", fee, "vehicleId", "fromLocationId", "toLocationId")
 VALUES ('2021-12-14', '07:09:19', 123.5, 2.29, 8.00, 1, 1, 2)

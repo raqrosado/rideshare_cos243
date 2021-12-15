@@ -1,4 +1,5 @@
 const { Model } = require('objection');
+const Ride = require("./Ride");
 
 class Location extends Model {
     static get tableName() {
@@ -7,19 +8,19 @@ class Location extends Model {
     
     static get relationMappings() {
         return {
-            locationId: {
+            fromLocations: {
                 relation: Model.HasManyRelation,
                 modelClass: Ride,
                 join: {
-                    from: 'location.location_id',
+                    from: 'location.id',
                     to: 'ride.fromLocationId'
                 }
             },
-            locationId: {
+            toLocations: {
                 relation: Model.HasManyRelation,
                 modelClass: Ride,
                 join: {
-                    from: 'location.location_id',
+                    from: 'location.id',
                     to: 'ride.toLocationId'
                 }
             }

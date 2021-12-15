@@ -1,4 +1,6 @@
 const { Model } = require('objection');
+const Driver = require("./Driver");
+const Ride = require("./Ride");
 
 class User extends Model {
     static get tableName() {
@@ -7,20 +9,24 @@ class User extends Model {
 
     static get relationMappings() {
         return {
-            userId: {
+            drivers: {
                 relation: Model.HasManyRelation,
                 modelClass: Driver,
                 join: {
-                    from: 'user.user_id',
-                    to: 'driver.userId'
+                    from: 'user.id',
+                    to: 'driver.id'
                 }
             },
-            userId: {
-                relation: Model.HasManyRelation,
-                modelClass: Passenger,
+            rides: {
+                relation: Model.ManyToManyRelation,
+                modelClass: Ride,
                 join: {
-                    from: 'user.user_id',
-                    to: 'passenger.userId'
+                    from: 'user.id',
+                    through: {
+                        from: 'passenger.userId',
+                        to: 'passenger.rideId'
+                    },
+                    to: 'ride.id'
                 }
             }
         };

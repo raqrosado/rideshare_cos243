@@ -1,4 +1,5 @@
 const { Model } = require('objection');
+const Vehicle= require("./Vehicle");
 
 class VehicleType extends Model {
   static get tableName() {
@@ -11,7 +12,7 @@ class VehicleType extends Model {
             relation: Model.HasManyRelation,
             modelClass: Vehicle,
             join: {
-                from: 'vehicle_type.vehicle_type_id',
+                from: 'vehicle_type.id',
                 to: 'vehicle.vehicleTypeId'
             }
         }

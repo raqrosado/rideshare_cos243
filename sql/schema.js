@@ -1,21 +1,21 @@
 function tableBuilder(knex) {
     query1 = knex.createTable("vehicle", tbl => {
-        tbl.increments("vehicle_id").primary();
+        tbl.increments("id").primary();
         tbl.string("make");
         tbl.string("model");
         tbl.string("color");
-        tbl.integer("vehicleTypeId").references("vehicle_type_id").inTable("vehicle_type");
+        tbl.integer("vehicleTypeId").references("id").inTable("vehicle_type");
         tbl.integer("capacity");
         tbl.float("mpg");
-        tbl.integer("licenseState").references("abbreviation").inTable("state");
+        tbl.string("licenseState").references("abbreviation").inTable("state");
         tbl.string("licensePlate");
     })
 
     query2 = knex.createTable("driver", tbl => {
-        tbl.increments("driver_id").primary();
-        tbl.integer("userId").references("user_id").inTable("user");
+        tbl.increments("id").primary().references("abbreviation").inTable("state");
+        tbl.integer("userId")
         tbl.string("licenseNumber");
-        tbl.integer("licenseState").references("abbreviation").inTable("state");
+        tbl.string("licenseState");
     })
 
     query3 = knex.createTable("user", tbl => {
