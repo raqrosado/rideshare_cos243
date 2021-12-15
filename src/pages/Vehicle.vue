@@ -6,27 +6,8 @@
       <v-data-table
         class="elevation-1"
         v-bind:headers="headers"
-        v-bind:items="Vehicle"
-      >
-        <template v-slot:item="{ item }">
-          <tr v-bind:class="itemClass(item)">
-            <td>{{ item.make }}</td>
-            <td>{{ item.model }}</td>
-            <td>{{ item.color }}</td>
-            <td>{{ item.vehicleTypeId }}</td>
-            <td>{{ item.capacity }}</td>
-            <td>{{ item.mpg }}</td>
-            <td>{{ item.licenseState }}</td>
-            <td>{{ item.licensePlate }}</td>
-            <td>
-              <v-icon small @click="deleteVehicle(item)"> mdi-delete </v-icon>
-              <v-icon small class="ml-2" @click="updateVehicle(item)">
-                mdi-pencil
-              </v-icon>
-            </td>
-          </tr>
-        </template>
-      </v-data-table>
+        v-bind:items="vehicles"
+      />
 
       <v-snackbar v-model="snackbar.show">
         {{ snackbar.text }}
@@ -40,7 +21,7 @@
 export default {
   name: "Vehicles",
 
-  data: function () {
+  data: function() {
     return {
       headers: [
         { text: "Make", value: "make" },
@@ -50,20 +31,20 @@ export default {
         { text: "Capacity", value: "capacity" },
         { text: "MPG", value: "mpg" },
         { text: "License State", value: "licenseState" },
-        { text: "License Plate", value: "licensePlate" },
+        { text: "License Plate", value: "licensePlate" }
       ],
       vehicles: [],
 
       snackbar: {
         show: false,
-        text: "",
-      },
+        text: ""
+      }
     };
   },
 
-  mounted: function () {
-    this.$axios.get("/vehicles").then((response) => {
-      this.vehicles = response.data.map((vehicle) => ({
+  mounted: function() {
+    this.$axios.get("/vehicles").then(response => {
+      this.vehicles = response.data.map(vehicle => ({
         id: vehicle.id,
         make: vehicle.make,
         model: vehicle.model,
@@ -72,7 +53,7 @@ export default {
         capacity: vehicle.capacity,
         mpg: vehicle.mpg,
         licenseState: vehicle.licenseState,
-        licensePlate: vehicle.licensePlate,
+        licensePlate: vehicle.licensePlate
       }));
     });
   },
@@ -100,17 +81,17 @@ export default {
 
     // Delete an vehicle.
     deleteVehicle(item) {
-      this.$axios.delete(`/vehicles/${item.id}`).then((response) => {
+      this.$axios.delete(`/vehicles/${item.id}`).then(response => {
         if (response.data.ok) {
           // The delete operation worked on the server; delete the local vehicle
           // by filtering the deleted vehicle from the list of vehicles.
           this.vehicles = this.vehicles.filter(
-            (vehicle) => vehicle.id !== item.id
+            vehicle => vehicle.id !== item.id
           );
         }
       });
-    },
-  },
+    }
+  }
 };
 </script>
 

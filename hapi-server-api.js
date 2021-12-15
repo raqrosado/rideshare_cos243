@@ -58,6 +58,7 @@ async function init() {
         description: "Retrieve all accounts",
       },
       handler: (request, h) => {
+        console.log("RETRIEVE ALL VEHICLES");
         return Vehicle.query();
       },
     },
@@ -82,6 +83,7 @@ async function init() {
         },
       },
       handler: async (request, h) => {
+        console.log("==> POST /vehicles");
         const existingVehicle = await Vehicle.query()
           .where("licensePlate", request.payload.licensePlate)
           .first();
