@@ -7,33 +7,33 @@
 
       <v-form v-model="valid">
         <v-text-field
-          v-model="location.name"
+          v-model="newLocation.name"
           v-bind:rules="rules.required"
           label="Location Name"
         ></v-text-field>
         <v-text-field
-          v-model="newMember.lastName"
+          v-model="newLocation.address"
           v-bind:rules="rules.required"
           label="Address"
         ></v-text-field>
         <v-text-field
-          v-model="newMember.email"
-          v-bind:rules="rules.email"
+          v-model="newLocation.city"
+          v-bind:rules="rules.required"
           error-count="10"
           label="City"
         >
         </v-text-field>
         <v-text-field
-          v-model="newMember.password"
-          v-bind:rules="rules.password"
+          v-model="newLocation.state"
+          v-bind:rules="rules.required"
           error-count="10"
           label="state"
           required
         >
         </v-text-field>
         <v-text-field
-          v-model="newMember.password"
-          v-bind:rules="rules.password"
+          v-model="newLocation.zipCode"
+          v-bind:rules="rules.required"
           error-count="10"
           label="zipCode"
           required
@@ -79,7 +79,7 @@ export default {
     return {
       valid: false, // Are all the fields in the form valid?
 
-      // Object to collect account data
+      // Object to collect location data
       newMember: {
         address: "",
         city: "",
@@ -87,8 +87,8 @@ export default {
         zipCode: "",
       },
 
-      // Was an account created successfully?
-      accountCreated: false,
+      // Was an location created successfully?
+      locationCreated: false,
 
       // Data to be displayed by the dialog.
       dialogHeader: "<no dialogHeader>",
@@ -110,7 +110,7 @@ export default {
     // Invoked when the user clicks the 'Sign Up' button.
     handleSubmit: function () {
       // Haven't been successful yet.
-      this.accountCreated = false;
+      this.locationCreated = false;
 
       // Post the content of the form to the Hapi server.
       this.$axios
@@ -125,7 +125,7 @@ export default {
           // appropriate dialog.
           if (result.data.ok) {
             this.showDialog("Success", result.data.msge);
-            this.accountCreated = true;
+            this.locationCreated = true;
           } else {
             this.showDialog("Sorry", result.data.msge);
           }
@@ -144,9 +144,9 @@ export default {
     // and navigate to the home page.
     hideDialog: function () {
       this.dialogVisible = false;
-      if (this.accountCreated) {
+      if (this.locationCreated) {
         // Only navigate away from the sign-up page if we were successful.
-        this.$router.push({ name: "home-page" });
+        this.$router.push({ name: "location" });
       }
     },
   },

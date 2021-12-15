@@ -8,6 +8,7 @@ import ResetPassword from "./pages/ResetPassword.vue";
 import About from "./pages/About.vue";
 import Accounts from "./pages/Accounts.vue";
 import Location from "./pages/Location.vue";
+import Vehicle from "./pages/Vehicle.vue";
 import NewLocation from "./pages/NewLocation.vue";
 
 Vue.use(Router);
@@ -23,6 +24,7 @@ export default new Router({
     { name: "about-us", path: "/about-us", component: About },
     { name: "accounts", path: "/accounts", component: Accounts },
     { name: "location", path: "/location", component: Location },
+    { name: "vehicles", path: "/vehicles", component: Vehicle },
     { name: "newlocation", path: "/newlocation", component: NewLocation }
 
   ]

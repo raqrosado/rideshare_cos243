@@ -31,29 +31,22 @@
         </v-list-item>
 
         <v-divider></v-divider>
-
-        <v-list-item v-bind:to="{ name: 'Location' }">
+        <v-list-item v-bind:to="{ name: 'location' }">
           <v-list-item-title>Location</v-list-item-title>
         </v-list-item>
         <v-divider></v-divider>
-        <v-list-item
-          @click="NewLocation"
-          v-bind:to="{ name: 'newlocation' }"
-        >
-        <v-list-item-title>New Location</v-list-item-title>
-        </v-list-item>
 
+        <v-list-item v-bind:to="{ name: 'newlocation' }">
+          <v-list-item-title>New Location</v-list-item-title>
+        </v-list-item>
 
         <v-list-item v-bind:to="{ name: 'vehicles' }">
           <v-list-item-title>Vehicles</v-list-item-title>
         </v-list-item>
         <v-divider></v-divider>
 
-        <v-list-item
-          @click="NewVehicle"
-          v-bind:to="{ name: 'newvehicle' }"
-        >
-        <v-list-item-title>New Vehicle</v-list-item-title>
+        <v-list-item @click="NewVehicle" v-bind:to="{ name: 'newvehicle' }">
+          <v-list-item-title>New Vehicle</v-list-item-title>
         </v-list-item>
         <v-divider></v-divider>
 
